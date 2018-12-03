@@ -139,6 +139,11 @@ public class DrawTool {
     public void drawText(double x, double y, String text){
         if (graphics2D!=null) graphics2D.drawString(text,(int)x,(int)y);
     }
+
+    public void setFont(String font, int size, boolean bold){
+        if(bold) new Font(font,Font.BOLD,size);
+        else new Font (font, Font.PLAIN, size);
+    }
 	
     /**
      * Spezifiziert das zu verwendende Grafikobjekt von Java
