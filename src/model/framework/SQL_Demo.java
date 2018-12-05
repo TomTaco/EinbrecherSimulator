@@ -8,10 +8,12 @@ import java.sql.*;
 public class SQL_Demo {
 
     public SQL_Demo(){
-        runDemo();
+        //runDemo();
+        makeTable();
+
     }
 
-    public void runDemo(){
+    /*public void runDemo(){
 
         try {
             // Erstelle eine Verbindung zu unserer SQL-Datenbank
@@ -60,7 +62,55 @@ public class SQL_Demo {
 
         } catch(Exception e){
             e.printStackTrace();
+        }*/
+
+        public void makeTable(){
+            try {
+            // Erstelle eine Verbindung zu unserer SQL-Datenbank
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql.webhosting24.1blu.de/db85565x2810214?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "s85565_2810214", "kkgbeste");
+            Statement stmt = con.createStatement();
+
+            try {
+
+                stmt.execute("CREATE TABLE District IF NOT EXISTS (" +
+                        "districtID NOT NULL AUTO_INCREMENT PRIMARY KEY ," +
+                        "name varchar(255) NOT NULL,");
+
+                stmt.execute("CREATE TABLE House IF NOT EXISTS(" +
+                        "houseID NOT NULL AUTO_INCREMENT PRIMARY KEY" +
+                        "" +
+                        " ");
+
+                stmt.execute("CREATE TABLE Resident IF NOT EXISTS(" +
+                        "residentID NOT NULL AUTO_INCREMENT PRIMARY KEY" +
+                        "" +
+                        " ");
+
+                stmt.execute("CREATE TABLE Loot IF NOT EXISTS(" +
+                        "lootID NOT NULL AUTO_INCREMENT PRIMARY KEY" +
+                        "" +
+                        " ");
+
+                stmt.execute("CREATE TABLE Tool IF NOT EXISTS(" +
+                        "toolID NOT NULL AUTO_INCREMENT PRIMARY KEY" +
+                        "" +
+                        " ");
+
+
+
+
+
+
+
+            } catch (Exception e){
+                System.out.println("Keine neue Tabelle angelegt.");
+            }
+        } catch(Exception e){
+        e.printStackTrace();
+
         }
+
+
 
 
     }
