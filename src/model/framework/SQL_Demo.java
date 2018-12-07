@@ -8,10 +8,12 @@ import java.sql.*;
 public class SQL_Demo {
 
     public SQL_Demo(){
-        runDemo();
+        //runDemo();
+        makeTable();
+
     }
 
-    public void runDemo(){
+    /*public void runDemo(){
 
         try {
             // Erstelle eine Verbindung zu unserer SQL-Datenbank
@@ -60,7 +62,73 @@ public class SQL_Demo {
 
         } catch(Exception e){
             e.printStackTrace();
+        }*/
+
+        public void makeTable(){
+            try {
+            // Erstelle eine Verbindung zu unserer SQL-Datenbank
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql.webhosting24.1blu.de/db85565x2810214?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "s85565_2810214", "kkgbeste");
+            Statement stmt = con.createStatement();
+
+            try {
+
+                stmt.execute("CREATE TABLE District IF NOT EXISTS (" +
+                        "districtID NOT NULL AUTO_INCREMENT PRIMARY KEY ," +
+                        "name VARCHAR(255) NOT NULL,");
+
+                stmt.execute("CREATE TABLE House IF NOT EXISTS(" +
+                        "houseID NOT NULL AUTO_INCREMENT PRIMARY KEY " +
+                        "security INT NOT NULL" +
+                        " ");
+
+                stmt.execute("CREATE TABLE Resident IF NOT EXISTS(" +
+                        "residentID NOT NULL AUTO_INCREMENT PRIMARY KEY " +
+                        "name VARCHAR(255)) " +
+                        "comeHome TIME NOT NULL " +
+                        "goesAway TIME NOT NULL");
+
+                stmt.execute("CREATE TABLE Loot IF NOT EXISTS(" +
+                        "lootID NOT NULL AUTO_INCREMENT PRIMARY KEY " +
+                        "term VARCHAR(255)) NOT NULL ");
+
+                stmt.execute("CREATE TABLE Tool IF NOT EXISTS(" +
+                        "toolID NOT NULL AUTO_INCREMENT PRIMARY KEY " +
+                        "name VARCHAR (255))" +
+                        " ");
+
+                stmt.execute("CREATE TABLE Car IF NOT EXISTS ("+
+                        "carID NOT NULL AUTO_INCREMENT PRIMARY KEY "+
+                        "carModel VARCHAR (255))");
+
+                stmt.execute("CREATE TABLE Valuables IF NOT EXISTS ("+ "" +
+                        "valuablesID NOT NULL AUTO_INCREMENT PRIMARY KEY " +
+                        "term VARCHAR (255))");
+
+                stmt.execute("CREATE TABLE Trader IF NOT EXISTS(" +
+                        "traderID NOT NULL AUTO_INCREMENT PRIMARY KEY " +
+                        "name VARCHART (255))");
+
+                stmt.execute("CREATE TABLE Quest IF NOT EXISTS(" +
+                        "questID NOT NULL AUTO_INCREMENT PRIMARY KEY ");
+
+                stmt.execute("CREATE TABLE Conatct IF NOT EXIST (" +
+                        "conatctID NOT NULL AUTO_INCREMENT PRIMARY KEY "+
+                        "information VARCHAR(255))");
+
+
+
+
+
+
+            } catch (Exception e){
+                System.out.println("Keine neue Tabelle angelegt.");
+            }
+        } catch(Exception e){
+        e.printStackTrace();
+
         }
+
+
 
 
     }
