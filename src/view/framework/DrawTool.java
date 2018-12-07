@@ -26,6 +26,10 @@ public class DrawTool {
         if (graphics2D!= null) graphics2D.drawImage(bI, (int)x, (int)y, null);
     }
 
+    public void drawImage(BufferedImage bI, double x, double y, int width, int height){
+        if (graphics2D!= null) graphics2D.drawImage(bI, (int)x, (int)y,width,height, null);
+    }
+
     /**
      * Zeichnet ein Rechteck als Linie ohne Fuellung
      * @param x Die x-Koordinate der oberen linken Ecke
@@ -140,9 +144,11 @@ public class DrawTool {
         if (graphics2D!=null) graphics2D.drawString(text,(int)x,(int)y);
     }
 
-    public void setFont(String font, int size, boolean bold){
-        if(bold) new Font(font,Font.BOLD,size);
-        else new Font (font, Font.PLAIN, size);
+    public void setFont(String font, int size, boolean bold) {
+        if (graphics2D != null) {
+            if (bold) graphics2D.setFont(new Font(font, Font.BOLD, size));
+            else graphics2D.setFont(new Font(font, Font.PLAIN, size));
+        }
     }
 	
     /**

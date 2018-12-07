@@ -14,6 +14,7 @@ public class ProgramController {
 
     // Referenzen
     private UIController uiController;
+    private Mainmenu menu;
 
     public ProgramController(UIController uiController){
         this.uiController = uiController;
@@ -22,7 +23,15 @@ public class ProgramController {
 
     public void startProgram(){
 
-        Overlay ov = new Overlay();
+        menu = new Mainmenu(this);
+        uiController.drawObject(menu);
+
+    }
+
+    public void startGame(){
+        uiController.removeObject(menu);
+        menu = null;
+        Overlay ov = new Overlay(uiController);
         uiController.drawObject(ov);
     }
 
