@@ -22,8 +22,8 @@ public class SQL_Demo {
 
             // lösche die Tabelle, falls sie schon existiert
             try {
-                stmt.execute("DROP TABLE test_person;");
-            } catch (Exception e){
+
+            } catch (Exception e){stmt.execute("DROP TABLE test_person;");
                 System.out.println("Tabelle nicht gelöscht.");
             }
 

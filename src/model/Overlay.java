@@ -16,15 +16,22 @@ public class Overlay extends GraphicalObject {
 
     //Attribute
     private double countYourAssToTheMoon;
+    private double hours;
+    private double minutes;
+    private String time;
 
     public Overlay(UIController ui){
         this.ui = ui;
         countYourAssToTheMoon = 0.01;
+        hours = 8;
+        minutes = 0;
+        time = "0"+(int)hours+":"+"0"+(int)minutes;
     }
 
     private void buildDistrict() {
         test = new District("Ghetto am Block",ui);
         ui.drawObject(test);
+
     }
 
     public void draw(DrawTool drawTool){
@@ -43,13 +50,42 @@ public class Overlay extends GraphicalObject {
         drawTool.drawFilledRectangle(50,200,150,150);
         drawTool.drawFilledRectangle(225,200,150,150);
         drawTool.drawFilledRectangle(400,200,150,150);
+
+        drawTool.setFont("Arial",25,false);
+        drawTool.drawText(700,50,time);
     }
 
     @Override
     public void update(double dt) {
         super.update(dt);
-        if(countYourAssToTheMoon >0) countYourAssToTheMoon -=dt;
-        else buildDistrict();
+        if(countYourAssToTheMoon >0){
+            countYourAssToTheMoon -=dt;
+        }else{
+            buildDistrict();
+        }
+
+
+        if(minutes < 60){
+            minutes += dt;
+        }else{
+            minutes = 0;
+            if(hours < 24) {
+                hours += 1;
+            }else{
+                hours = 0;
+            }
+        }
+        if(hours < 10 && minutes < 10) {
+            time = "0" + (int)hours + ":" + "0" + (int)minutes;
+        }else if(hours < 10){
+            time = "0" + (int)hours + ":" +  (int)minutes;
+        }else if(minutes < 10){
+            time = (int)hours + ":" + "0" + (int)minutes;
+        }else{
+            time =  (int)hours + ":" +  (int)minutes;
+        }
+
+
     }
 
     @Override
