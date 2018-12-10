@@ -115,6 +115,7 @@ public class SQL_Demo {
                         "conatctID NOT NULL AUTO_INCREMENT PRIMARY KEY "+
                         "information VARCHAR(255))");
 
+                System.out.println("hello!");
 
 
 
