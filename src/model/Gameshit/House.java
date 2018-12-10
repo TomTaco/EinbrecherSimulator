@@ -17,6 +17,6 @@ public class House extends GraphicalObject {
     @Override
     public void draw(DrawTool drawTool) {
         super.draw(drawTool);
-        drawTool.drawImage(createNewImage("out/production/Projektframework AOS-KNB/images/"+housePng+".png"),x,y,150,150 );
+        drawTool.drawImage(createNewImage("assets/images/"+housePng+".png"),x,y,150,150 );
     }
 }
