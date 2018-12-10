@@ -27,7 +27,7 @@ public class House extends GraphicalObject {
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
         if (e.getX() > x && e.getX() < x + getMyImage().getWidth() && e.getY() > y && e.getY() < y+ getMyImage().getHeight()) {
-
+            System.out.println("Info von Haus");
         }
     }
 }

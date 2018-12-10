@@ -16,8 +16,9 @@ public class Overlay extends GraphicalObject {
 
     //Attribute
     private double countYourAssToTheMoon;
-    private double hours;
-    private double minutes;
+    private int hours;
+    private int minutes;
+    private double seconds;
     private String time;
 
     public Overlay(UIController ui){
@@ -25,7 +26,8 @@ public class Overlay extends GraphicalObject {
         countYourAssToTheMoon = 0.01;
         hours = 8;
         minutes = 0;
-        time = "0"+(int)hours+":"+"0"+(int)minutes;
+        seconds = 0;
+        time = "0"+hours+":"+"0"+minutes;
     }
 
     private void buildDistrict() {
@@ -63,26 +65,31 @@ public class Overlay extends GraphicalObject {
         }else{
             buildDistrict();
         }
-
-
-        if(minutes < 60){
-            minutes += dt;
+        if(seconds < 60){
+            seconds += 60*dt;
         }else{
-            minutes = 0;
-            if(hours < 24) {
-                hours += 1;
+            seconds = 0;
+            if((minutes + 5) < 60) {
+                minutes += 5;
             }else{
-                hours = 0;
+            minutes = 0;
+                if(hours < 24) {
+                  hours += 1;
+                }else{
+                    hours = 0;
+                }
             }
         }
+
+
         if(hours < 10 && minutes < 10) {
-            time = "0" + (int)hours + ":" + "0" + (int)minutes;
+            time = "0" + hours + ":" + "0" + minutes;
         }else if(hours < 10){
-            time = "0" + (int)hours + ":" +  (int)minutes;
+            time = "0" + hours + ":" + minutes;
         }else if(minutes < 10){
-            time = (int)hours + ":" + "0" + (int)minutes;
+            time = hours + ":" + "0" + minutes;
         }else{
-            time =  (int)hours + ":" +  (int)minutes;
+            time =  hours + ":" +  minutes;
         }
 
 
