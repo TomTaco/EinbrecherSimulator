@@ -16,12 +16,15 @@ public class District extends GraphicalObject {
     public District(String disName,UIController ui){
         this.disName = disName;
         this.ui = ui;
+        Background back = new Background();
+        ui.drawObject(back);
         houses[0] = new House("House1",50, 200);
         houses[1] = new House("House2",225, 200);
         houses[2] = new House("House3",400,200);
         ui.drawObject(houses[0]);
         ui.drawObject(houses[1]);
         ui.drawObject(houses[2]);
+
     }
 
 
@@ -30,5 +33,6 @@ public class District extends GraphicalObject {
         super.draw(drawTool);
         drawTool.setFont("Arial",35,true);
         drawTool.drawText(270,90,disName);
+
     }
 }
