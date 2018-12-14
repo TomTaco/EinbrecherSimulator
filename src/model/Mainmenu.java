@@ -20,17 +20,13 @@ public class Mainmenu extends GraphicalObject {
 
 
     public void draw(DrawTool drawTool) {
-        drawTool.setCurrentColor(200,200,200,100);
-        drawTool.drawFilledRectangle(300,300,200,75);
-        drawTool.setFont("Arial",20,true);
-        drawTool.setCurrentColor(255,0,0,255);
-        drawTool.drawText(350,350,"START  oder so");
+        drawTool.drawImage(createNewImage("images/main.png"),0,0);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
-        if(e.getX()>300 && e.getX() < 300 + 200 && e.getY() > 300 && e.getY()< 300+75){
+        if(e.getX()>360 && e.getX() < 360 + 110 && e.getY() > 400 && e.getY()< 400+170){
             pc.startGame();
         }
     }
