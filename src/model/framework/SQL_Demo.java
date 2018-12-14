@@ -177,26 +177,50 @@ public class SQL_Demo {
 
             try {
 
-            stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                    /*
-                    "VALUES ('Janet', 'Arm', 16, 8)" +
-                    "VALUES ('Jan', 'Reich', 0, 23 )" +
-                    "VALUES ('Justin', 'Scholz', 8 ,16)" +
-                    "VALUES ('Michael','Dang',16 ,8 )" +
-                    "VALUES ('Alex','Heighman', 16 , 8)" +
-                    "VALUES ('Marcel','Braun', 16, 8)" +
-                    "VALUES ('Haydar','Genc', 16, 8)" +
-                    "VALUES ('Artur','Lyadsky', 16, 8)" +
-                    "VALUES ('Joshy','Eulberg', 16, 8)" +
-                    "VALUES ('Luis','Böhme', 16 , 8)" +
-                    "VALUES ('David','Junowitsch', 16, 8)" +
-                    "VALUES ('David','Kopyra', 16, 8)" +
-                    "VALUES ('Ambro','Ambro', 16, 8)" +
-                    */
-                    "VALUES ('Janet','Arm', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Janet','Arm', 160000, 80000);");
 
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Jan','Reich', 160000, 80000);");
 
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Justin','Scholz', 160000, 80000);");
 
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Dang','Mich', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Kenbi','Knebellord', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Ambro','Ambrolord', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Tom','Taco', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Mr','KaputteKI', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Mr','Highman', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Marcel','Brooooaaaaaun', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Besl','Flor', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('','', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('','', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('','', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('','', 160000, 80000);");
 
             } catch (SQLException e){
                 System.out.println("Keine neue Tabelle gefüllt.");
