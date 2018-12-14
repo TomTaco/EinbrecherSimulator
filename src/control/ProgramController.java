@@ -36,6 +36,7 @@ public class ProgramController {
         menu = null;
         Overlay ov = new Overlay(uiController);
         uiController.drawObject(ov);
+
     }
 
     public  void updateProgram(double dt){

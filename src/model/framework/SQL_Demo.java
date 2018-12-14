@@ -84,15 +84,17 @@ public class SQL_Demo {
                 stmt.execute("DROP TABLE DD_District;");
                 stmt.execute("DROP TABLE DD_House;");
                 stmt.execute("DROP TABLE DD_Resident;");
+                stmt.execute("DROP TABLE DD_Tool;");
                 stmt.execute("DROP TABLE DD_Loot;");
                 stmt.execute("DROP TABLE DD_Car;");
                 stmt.execute("DROP TABLE DD_Valuables;");
                 stmt.execute("DROP TABLE DD_Trader;");
                 stmt.execute("DROP TABLE DD_Quest;");
-                stmt.execute("DROP TABLE DD_Conatct;");
+                stmt.execute("DROP TABLE DD_Contact;");
 
-            } catch (Exception e){
+            } catch (SQLException e){
                 System.out.println("Tabelle nicht gelöscht.");
+                System.out.println(e);
             }
 
             try {
@@ -155,8 +157,8 @@ public class SQL_Demo {
                         "); ");
 
 
-                stmt.execute("CREATE TABLE DD_Conatct(" +
-                        "conatctID int NOT NULL AUTO_INCREMENT, "+
+                stmt.execute("CREATE TABLE DD_Contact(" +
+                        "contactID int NOT NULL AUTO_INCREMENT, "+
                         "information VARCHAR(255)," +
                         "PRIMARY KEY (contactID)" +
                         "); ");
@@ -176,23 +178,29 @@ public class SQL_Demo {
             try {
 
             stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                    "VALUES ('Janet', 'Arm', 16, 8);" +
-                    "VALUES ('Jan', 'Reich', 0, 23 );" +
+                    /*
+                    "VALUES ('Janet', 'Arm', 16, 8)" +
+                    "VALUES ('Jan', 'Reich', 0, 23 )" +
                     "VALUES ('Justin', 'Scholz', 8 ,16)" +
-                    "VALUES ('Michael','Dang',16 ,8 );" +
-                    "VALUES ('Alex','Heighman', 16 , 8);" +
-                    "VALUES ('Marcel','Braun', 16, 8);" +
-                    "VALUES ('Haydar','Genc', 16, 8);" +
-                    "VALUES ('Artur','Lyadsky', 16, 8);" +
-                    "VALUES ('Joshy','Eulberg', 16, 8);" +
-                    "VALUES ('Luis','Böhme', , );" +
-                    "VALUES ('David','Junowitsch', 16, 8);" +
-                    "VALUES ('David','Kopyra', 16, 8);" +
-                    "VALUES ('Ambro','Ambro', 16, 8);" +
-                    "VALUES ('Knebi','Knebi', 16, 8);");
+                    "VALUES ('Michael','Dang',16 ,8 )" +
+                    "VALUES ('Alex','Heighman', 16 , 8)" +
+                    "VALUES ('Marcel','Braun', 16, 8)" +
+                    "VALUES ('Haydar','Genc', 16, 8)" +
+                    "VALUES ('Artur','Lyadsky', 16, 8)" +
+                    "VALUES ('Joshy','Eulberg', 16, 8)" +
+                    "VALUES ('Luis','Böhme', 16 , 8)" +
+                    "VALUES ('David','Junowitsch', 16, 8)" +
+                    "VALUES ('David','Kopyra', 16, 8)" +
+                    "VALUES ('Ambro','Ambro', 16, 8)" +
+                    */
+                    "VALUES ('Janet','Arm', 160000, 80000);");
+
+
+
 
             } catch (SQLException e){
-                System.out.println("Keine neue Tabelle angelegt.");
+                System.out.println("Keine neue Tabelle gefüllt.");
+                System.out.println(e);
             }
 
         }
