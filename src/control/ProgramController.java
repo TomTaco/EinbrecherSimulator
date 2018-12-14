@@ -26,6 +26,7 @@ public class ProgramController {
 
         menu = new Mainmenu(this);
         uiController.drawObject(menu);
+        SQL_Demo sql = new SQL_Demo();
 
     }
 
@@ -34,6 +35,7 @@ public class ProgramController {
         menu = null;
         Overlay ov = new Overlay(uiController);
         uiController.drawObject(ov);
+
     }
 
     public  void updateProgram(double dt){
