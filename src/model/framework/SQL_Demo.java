@@ -7,10 +7,24 @@ import java.sql.*;
  */
 public class SQL_Demo {
 
-    public SQL_Demo(){
-        //runDemo();
-        makeTable();
+    private Statement stmt;
 
+
+    public SQL_Demo() {
+        //runDemo();
+
+
+        try {
+            // Erstelle eine Verbindung zu unserer SQL-Datenbank
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql.webhosting24.1blu.de/db85565x2810214?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "s85565_2810214", "kkgbeste");
+            stmt = con.createStatement();
+            makeTable();
+            fillTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+
+        }
     }
 
     /*public void runDemo(){
@@ -65,73 +79,266 @@ public class SQL_Demo {
         }*/
 
         public void makeTable(){
-            try {
-            // Erstelle eine Verbindung zu unserer SQL-Datenbank
-            Connection con = DriverManager.getConnection("jdbc:mysql://mysql.webhosting24.1blu.de/db85565x2810214?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "s85565_2810214", "kkgbeste");
-            Statement stmt = con.createStatement();
 
             try {
+                stmt.execute("DROP TABLE DD_District;");
+                stmt.execute("DROP TABLE DD_House;");
+                stmt.execute("DROP TABLE DD_Resident;");
+                stmt.execute("DROP TABLE DD_Tool;");
+                stmt.execute("DROP TABLE DD_Loot;");
+                stmt.execute("DROP TABLE DD_Car;");
+                stmt.execute("DROP TABLE DD_Valuables;");
+                stmt.execute("DROP TABLE DD_Trader;");
+                stmt.execute("DROP TABLE DD_Quest;");
+                stmt.execute("DROP TABLE DD_Contact;");
 
-                stmt.execute("CREATE TABLE District IF NOT EXISTS (" +
-                        "districtID NOT NULL AUTO_INCREMENT PRIMARY KEY ," +
-                        "name VARCHAR(255) NOT NULL,");
-
-                stmt.execute("CREATE TABLE House IF NOT EXISTS(" +
-                        "houseID NOT NULL AUTO_INCREMENT PRIMARY KEY " +
-                        "security INT NOT NULL" +
-                        " ");
-
-                stmt.execute("CREATE TABLE Resident IF NOT EXISTS(" +
-                        "residentID NOT NULL AUTO_INCREMENT PRIMARY KEY " +
-                        "name VARCHAR(255)) " +
-                        "comeHome TIME NOT NULL " +
-                        "goesAway TIME NOT NULL");
-
-                stmt.execute("CREATE TABLE Loot IF NOT EXISTS(" +
-                        "lootID NOT NULL AUTO_INCREMENT PRIMARY KEY " +
-                        "term VARCHAR(255)) NOT NULL ");
-
-                stmt.execute("CREATE TABLE Tool IF NOT EXISTS(" +
-                        "toolID NOT NULL AUTO_INCREMENT PRIMARY KEY " +
-                        "name VARCHAR (255))" +
-                        " ");
-
-                stmt.execute("CREATE TABLE Car IF NOT EXISTS ("+
-                        "carID NOT NULL AUTO_INCREMENT PRIMARY KEY "+
-                        "carModel VARCHAR (255))");
-
-                stmt.execute("CREATE TABLE Valuables IF NOT EXISTS ("+ "" +
-                        "valuablesID NOT NULL AUTO_INCREMENT PRIMARY KEY " +
-                        "term VARCHAR (255))");
-
-                stmt.execute("CREATE TABLE Trader IF NOT EXISTS(" +
-                        "traderID NOT NULL AUTO_INCREMENT PRIMARY KEY " +
-                        "name VARCHART (255))");
-
-                stmt.execute("CREATE TABLE Quest IF NOT EXISTS(" +
-                        "questID NOT NULL AUTO_INCREMENT PRIMARY KEY ");
-
-                stmt.execute("CREATE TABLE Conatct IF NOT EXIST (" +
-                        "conatctID NOT NULL AUTO_INCREMENT PRIMARY KEY "+
-                        "information VARCHAR(255))");
-
-                System.out.println("hello!");
-
-
-
-
-
-            } catch (Exception e){
-                System.out.println("Keine neue Tabelle angelegt.");
+            } catch (SQLException e){
+                System.out.println("Tabelle nicht gelöscht.");
+                System.out.println(e);
             }
-        } catch(Exception e){
-        e.printStackTrace();
+
+            try {
+
+                stmt.execute("CREATE TABLE DD_District(" +
+                        "districtID int NOT NULL AUTO_INCREMENT," +
+                        "name VARCHAR(255) NOT NULL,"+
+                        "PRIMARY KEY (districtID)" +
+                        ");");
+
+                stmt.execute("CREATE TABLE DD_House(" +
+                        "houseID  int NOT NULL AUTO_INCREMENT, " +
+                        "security INT NOT NULL," +
+                        "PRIMARY KEY (houseID)" +
+                        "); ");
+
+                stmt.execute("CREATE TABLE DD_Resident(" +
+                        "residentID int NOT NULL AUTO_INCREMENT, " +
+                        "firstName VARCHAR(255), " +
+                        "lastName VARCHAR(255)," +
+                        "comeHome TIME NOT NULL, " +
+                        "goesAway TIME NOT NULL," +
+                        "PRIMARY KEY (residentID)" +
+                        "); ");
+
+
+                stmt.execute("CREATE TABLE DD_Loot(" +
+                        "lootID int NOT NULL AUTO_INCREMENT," +
+                        "term VARCHAR(255) NOT NULL, " +
+                        "PRIMARY KEY (lootID)" +
+                        "); ");
+
+                stmt.execute("CREATE TABLE DD_Tool(" +
+                        "toolID int NOT NULL AUTO_INCREMENT," +
+                        "term VARCHAR(255) NOT NULL, " +
+                        "PRIMARY KEY (toolID)" +
+                        "); ");
+
+                stmt.execute("CREATE TABLE DD_Car("+
+                        "carID int NOT NULL AUTO_INCREMENT,"+
+                        "carModel VARCHAR (255)," +
+                        "PRIMARY KEY (carID)" +
+                        "); ");
+
+                stmt.execute("CREATE TABLE DD_Valuables("+
+                        "valuablesID int NOT NULL AUTO_INCREMENT, " +
+                        "term VARCHAR (255),"+
+                        "PRIMARY KEY (valuablesID)" +
+                        "); ");
+
+                stmt.execute("CREATE TABLE DD_Trader(" +
+                        "traderID int NOT NULL AUTO_INCREMENT, " +
+                        "name VARCHAR (255)," +
+                        "PRIMARY KEY (traderID)" +
+                        "); ");
+
+                stmt.execute("CREATE TABLE DD_Quest(" +
+                        "questID int NOT NULL AUTO_INCREMENT, " +
+                        "PRIMARY KEY (questID)" +
+                        "); ");
+
+
+                stmt.execute("CREATE TABLE DD_Contact(" +
+                        "contactID int NOT NULL AUTO_INCREMENT, "+
+                        "information VARCHAR(255)," +
+                        "PRIMARY KEY (contactID)" +
+                        "); ");
+
+
+
+
+
+
+            } catch (SQLException e){
+                System.out.println(e);
+            }
+        }
+
+        public void fillTable(){
+
+            try {
+
+                //Bewohner
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Janet','Arm', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Jan','Reich', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Justin','Scholz', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Dang','Mich', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Kenbi','Knebellord', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Ambro','Ambrolord', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Tom','Taco', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Mr','KaputteKI', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Mr','Highman', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Marcel','Brooooaaaaaun', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Besl','Flor', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Mr','Lowman', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Dufte','Dave', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Tony','Stark', 160000, 80000);");
+
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
+                        "VALUES ('Jebediah','Kerman', 160000, 80000);");
+
+                //Viertel
+                stmt.execute("INSERT INTO DD_District (name) " +
+                        "VALUES ('Ghedo am Block');");
+
+                stmt.execute("INSERT INTO DD_District (name) " +
+                        "VALUES ('Dorf');");
+
+                stmt.execute("INSERT INTO DD_District (name) " +
+                        "VALUES ('City');");
+
+                stmt.execute("INSERT INTO DD_District (name) " +
+                        "VALUES ('Bonzenviertel');");
+
+                //Häuser
+                stmt.execute("INSERT INTO DD_House (security) " +
+                        "VALUES ('1');");
+
+                stmt.execute("INSERT INTO DD_House (security) " +
+                        "VALUES ('2');");
+
+                stmt.execute("INSERT INTO DD_House (security) " +
+                        "VALUES ('3');");
+
+                stmt.execute("INSERT INTO DD_House (security) " +
+                        "VALUES ('4');");
+
+                stmt.execute("INSERT INTO DD_House (security) " +
+                        "VALUES ('5');");
+
+                stmt.execute("INSERT INTO DD_House (security) " +
+                        "VALUES ('6');");
+
+                stmt.execute("INSERT INTO DD_House (security) " +
+                        "VALUES ('10');");
+
+                stmt.execute("INSERT INTO DD_House (security) " +
+                        "VALUES ('15');");
+
+                stmt.execute("INSERT INTO DD_House (security) " +
+                        "VALUES ('20');");
+
+                stmt.execute("INSERT INTO DD_House (security) " +
+                        "VALUES ('30');");
+
+                stmt.execute("INSERT INTO DD_House (security) " +
+                        "VALUES ('40');");
+
+                stmt.execute("INSERT INTO DD_House (security) " +
+                        "VALUES ('50');");
+
+                //Autos
+                stmt.execute("INSERT INTO DD_Car (carModel) " +
+                        "VALUES ('Golf GTI');");
+
+                stmt.execute("INSERT INTO DD_Car (carModel) " +
+                        "VALUES ('Shirocco');");
+
+                stmt.execute("INSERT INTO DD_Car (carModel) " +
+                        "VALUES ('Prosche 911');");
+
+                stmt.execute("INSERT INTO DD_Car (carModel) " +
+                        "VALUES ('Ferrari 458');");
+
+                stmt.execute("INSERT INTO DD_Car (carModel) " +
+                        "VALUES ('Audi R8');");
+
+                stmt.execute("INSERT INTO DD_Car (carModel) " +
+                        "VALUES ('Lamborgini Huracan');");
+
+                //Diebesware
+                stmt.execute("INSERT INTO DD_Loot (term) " +
+                        "VALUES ('Schmuck');");
+
+                stmt.execute("INSERT INTO DD_Loot (term) " +
+                        "VALUES ('Silberbesteck');");
+
+                stmt.execute("INSERT INTO DD_Loot (term) " +
+                        "VALUES ('Fernsehr');");
+
+                stmt.execute("INSERT INTO DD_Loot (term) " +
+                        "VALUES ('Laptop');");
+
+                stmt.execute("INSERT INTO DD_Loot (term) " +
+                        "VALUES ('Jans Surface');");
+
+                stmt.execute("INSERT INTO DD_Loot (term) " +
+                        "VALUES ('Smartphone');");
+
+                stmt.execute("INSERT INTO DD_Loot (term) " +
+                        "VALUES ('Gold');");
+
+                stmt.execute("INSERT INTO DD_Loot (term) " +
+                        "VALUES ('Gaming PC');");
+
+                //Werkzeuge
+                stmt.execute("INSERT INTO DD_Tool (term) " +
+                        "VALUES ('Bolzenschneider');");
+
+                stmt.execute("INSERT INTO DD_Tool (term) " +
+                        "VALUES ('Brechstange');");
+
+                stmt.execute("INSERT INTO DD_Tool (term) " +
+                        "VALUES ('Bohrer');");
+
+                stmt.execute("INSERT INTO DD_Tool (term) " +
+                        "VALUES ('Fensterschneider');");
+
+                stmt.execute("INSERT INTO DD_Tool (term) " +
+                        "VALUES ('Dietrich');");
+
+            } catch (SQLException e){
+                System.out.println("Keine neue Tabelle gefüllt.");
+                System.out.println(e);
+            }
 
         }
 
-
-
-
-    }
 
 }
