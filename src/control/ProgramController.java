@@ -3,7 +3,7 @@ package control;
 import control.framework.UIController;
 import model.Mainmenu;
 import model.Overlay;
-import model.framework.SQL_Demo;
+import model.framework.SQLController;
 
 /**
  * Ein Objekt der Klasse ProgramController dient dazu das Programm zu steuern. Die updateProgram - Methode wird
@@ -16,6 +16,7 @@ public class ProgramController {
     // Referenzen
     private UIController uiController;
     private Mainmenu menu;
+    private SQLController sql;
 
 
     public ProgramController(UIController uiController){
@@ -27,14 +28,14 @@ public class ProgramController {
 
         menu = new Mainmenu(this);
         uiController.drawObject(menu);
-        SQL_Demo sql = new SQL_Demo();
+        sql = new SQLController();
 
     }
 
     public void startGame(){
         uiController.removeObject(menu);
         menu = null;
-        Overlay ov = new Overlay(uiController);
+        Overlay ov = new Overlay(uiController, sql.getStatement());
         uiController.drawObject(ov);
 
     }

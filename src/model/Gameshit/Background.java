@@ -3,14 +3,20 @@ package model.Gameshit;
 import model.framework.GraphicalObject;
 import view.framework.DrawTool;
 
+import java.awt.image.BufferedImage;
+
 public class Background extends GraphicalObject {
 
-    public Background(){
+    //Referenzen
+    private BufferedImage image;
+
+    public Background(BufferedImage image){
+        this.image = image;
     }
 
     @Override
     public void draw(DrawTool drawTool) {
         super.draw(drawTool);
-        drawTool.drawImage(createNewImage("images/district1.png"),0,0);
-    }
+        drawTool.drawImage(image,0,0,800,800);
+}
 }

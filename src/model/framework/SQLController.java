@@ -5,12 +5,12 @@ import java.sql.*;
 /**
  * Zur Benutzung dieser Klasse muss ein JDBC-Connector als Bibliothek in das Projekt eingebunden sein.
  */
-public class SQL_Demo {
+public class SQLController {
 
     private Statement stmt;
 
 
-    public SQL_Demo() {
+    public SQLController() {
         //runDemo();
 
 
@@ -225,7 +225,7 @@ public class SQL_Demo {
 
                 //Viertel
                 stmt.execute("INSERT INTO DD_District (name) " +
-                        "VALUES ('Ghedo am Block');");
+                        "VALUES ('Ghetto');");
 
                 stmt.execute("INSERT INTO DD_District (name) " +
                         "VALUES ('Dorf');");
@@ -338,6 +338,10 @@ public class SQL_Demo {
                 System.out.println(e);
             }
 
+        }
+
+        public Statement getStatement (){
+            return stmt;
         }
 
 
