@@ -42,8 +42,6 @@ public class Overlay extends GraphicalObject {
 
     public void draw(DrawTool drawTool){
 
-        //Rechteck
-
         drawTool.setCurrentColor(230,230,230,255);
         drawTool.setFont("Arial",25,false);
         drawTool.drawText(700,50,time);
@@ -54,8 +52,7 @@ public class Overlay extends GraphicalObject {
         try {
             ResultSet results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = 1;");
             results.next();
-            System.out.println(Integer.parseInt(results.getString("districtID")));
-            dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui, this);
+            dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui);
             ui.drawObject(dis);
         }catch (SQLException e){
             e.printStackTrace();
@@ -66,7 +63,7 @@ public class Overlay extends GraphicalObject {
     public void update(double dt) {
         super.update(dt);
         if(seconds < 60){
-            seconds += 10000*dt;
+            seconds += 60*dt;
         }else{
             seconds = 0;
             if((minutes + 5) < 60) {
@@ -91,6 +88,7 @@ public class Overlay extends GraphicalObject {
         }else{
             time =  hours + ":" +  minutes;
         }
+
 
 
     }
@@ -118,8 +116,7 @@ public class Overlay extends GraphicalObject {
                     break;
             }
             results.next();
-            System.out.println(results.getString("name")+Integer.parseInt(results.getString("districtID")));
-            dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui, this);
+            dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui);
             ui.drawObject(dis);
         }catch (SQLException e){
             e.printStackTrace();
@@ -131,9 +128,9 @@ public class Overlay extends GraphicalObject {
         super.mouseReleased(e);
         if(!clicked) {
             if (e.getX() > 210 && e.getX() < 250 && e.getY() > 52 && e.getY() < 92) {
-                nextDistrict(1);
-            } else if (e.getX() > 550 && e.getX() < 590 && e.getY() > 52 && e.getY() < 92) {
                 nextDistrict(-1);
+            } else if (e.getX() > 550 && e.getX() < 590 && e.getY() > 52 && e.getY() < 92) {
+                nextDistrict(1);
             }
         }
         clicked = !clicked;

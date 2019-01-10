@@ -10,12 +10,14 @@ import java.awt.event.MouseEvent;
 public class Mainmenu extends GraphicalObject {
 
     //Attribute
+    private boolean clicked;
 
     //Referenzen
     private ProgramController pc;
 
     public Mainmenu(ProgramController pc){
         this.pc = pc;
+        clicked = false;
     }
 
 
@@ -26,8 +28,12 @@ public class Mainmenu extends GraphicalObject {
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
-        if(e.getX()>360 && e.getX() < 360 + 110 && e.getY() > 400 && e.getY()< 400+170){
-            pc.startGame();
+        if(!clicked) {
+            if (e.getX() > 360 && e.getX() < 360 + 110 && e.getY() > 400 && e.getY() < 400 + 170) {
+                pc.startGame();
+            }
         }
+        clicked = !clicked;
+
     }
 }

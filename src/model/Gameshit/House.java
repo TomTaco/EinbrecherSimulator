@@ -5,18 +5,26 @@ import view.framework.DrawTool;
 
 public class House extends GraphicalObject {
 
-    private String housePng;
     private int x, y;
+    private int hID;
 
-    public House(String housePng, int x, int y){
+
+    public House(int x, int y, int hID){
         this.x = x;
         this.y = y;
-        this.housePng = housePng;
+        this.hID = hID;
     }
 
     @Override
     public void draw(DrawTool drawTool) {
         super.draw(drawTool);
-        drawTool.drawImage(createNewImage("images/"+housePng+".png"),x,y,150,150 );
+        drawTool.drawImage(createNewImage("images/house" + hID + ".png"), x, y, 150, 150);
+        drawTool.drawImage(createNewImage("images/namesign.png"),x+25,y+145,100,37);
+
+    }
+
+    @Override
+    public void update(double dt) {
+        super.update(dt);
     }
 }
