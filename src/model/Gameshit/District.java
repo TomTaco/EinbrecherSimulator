@@ -22,7 +22,6 @@ public class District extends GraphicalObject {
         this.disName = disName;
         this.disID = disID;
         this.ui = ui;
-        setBackground();
         delay = 0.01;
 
     }
@@ -36,13 +35,7 @@ public class District extends GraphicalObject {
         ui.drawObject(houses[2]);
     }
 
-    private void setBackground() {
-        Background background = new Background(createNewImage("images/white.png"));
-        if (disID >0 && disID <4){
-            background = new Background(createNewImage("images/district"+disID+"_blur"+".png"));
-        }
-        ui.drawObject(background);
-    }
+
 
 
     @Override
@@ -53,6 +46,7 @@ public class District extends GraphicalObject {
         drawTool.drawImage(createNewImage("images/arrow.png"),210,52,40,40);
         drawTool.drawImage(createNewImage("images/arrow.png"),590,52,-40,40);
         drawTool.drawImage(createNewImage("images/board.png"),37,195,526,160);
+        drawTool.setCurrentColor(255,255,255,255);
         drawTool.setFont("Arial",35,true);
         drawTool.drawText(265,90,disName);
 

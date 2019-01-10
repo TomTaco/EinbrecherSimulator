@@ -2,6 +2,7 @@ package model;
 
 
 import control.framework.UIController;
+import model.Gameshit.Background;
 import model.Gameshit.District;
 import model.framework.GraphicalObject;
 import view.framework.DrawTool;
@@ -11,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import static javax.swing.text.StyleConstants.setBackground;
+
 public class Overlay extends GraphicalObject {
 
 
@@ -18,6 +21,7 @@ public class Overlay extends GraphicalObject {
     private District dis;
     private UIController ui;
     private Statement stmt;
+    private Background back;
 
     //Attribute
     private int hours;
@@ -40,8 +44,10 @@ public class Overlay extends GraphicalObject {
     }
 
 
-    public void draw(DrawTool drawTool){
 
+
+    public void draw(DrawTool drawTool){
+        drawTool.drawImage(createNewImage("images/timesign.png"),625,20,150,40);
         drawTool.setCurrentColor(230,230,230,255);
         drawTool.setFont("Arial",25,false);
         drawTool.drawText(700,50,time);
@@ -50,6 +56,8 @@ public class Overlay extends GraphicalObject {
 
     public void buildGame(){
         try {
+            back = new Background(1);
+            ui.drawObject(back);
             ResultSet results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = 1;");
             results.next();
             dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui);
@@ -104,15 +112,19 @@ public class Overlay extends GraphicalObject {
             switch(currentDistrict){
                 case 1:
                     results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = 1;");
+                    back.changeBackground(1);
                     break;
                 case 2:
                     results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = 2;");
+                    back.changeBackground(2);
                     break;
                 case 3:
                     results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = 3;");
+                    back.changeBackground(3);
                     break;
                 case 4:
                     results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = 4;");
+                    back.changeBackground(4);
                     break;
             }
             results.next();

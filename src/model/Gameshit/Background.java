@@ -8,15 +8,19 @@ import java.awt.image.BufferedImage;
 public class Background extends GraphicalObject {
 
     //Referenzen
-    private BufferedImage image;
+    private int disID;
 
-    public Background(BufferedImage image){
-        this.image = image;
+    public Background(int disID){
+        this.disID = disID;
     }
 
     @Override
     public void draw(DrawTool drawTool) {
         super.draw(drawTool);
-        drawTool.drawImage(image,0,0,800,800);
-}
+        drawTool.drawImage(createNewImage("images/district"+disID+"_blur"+".png"),0,0,800,800);
+    }
+
+    public void changeBackground(int num){
+        this.disID = num;
+    }
 }

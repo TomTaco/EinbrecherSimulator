@@ -13,7 +13,7 @@ import java.util.Iterator;
  * Diese Modellierung ist nicht sauber, da das DrawingPanel damit Funktionen eines Controllers übernimmt.
  * Vorgegebene Klasse des Frameworks. Modifikation auf eigene Gefahr.
  */
-public class DrawingPanel extends JPanel implements KeyListener, MouseListener {
+public class DrawingPanel extends JPanel implements KeyListener, MouseListener, MouseMotionListener {
 
     //Attribute
     private int currentDT;
@@ -53,6 +53,7 @@ public class DrawingPanel extends JPanel implements KeyListener, MouseListener {
         if(!requested){
             addMouseListener(this);
             addKeyListener(this);
+            addMouseMotionListener(this);
             setFocusable(true);
             requestFocusInWindow();
             requested = ! requested;
@@ -150,6 +151,8 @@ public class DrawingPanel extends JPanel implements KeyListener, MouseListener {
     public void mouseEntered(MouseEvent e) {
     }
 
+
+
     /**
      * Unbenutzt bis auf Weiteres
      */
@@ -162,5 +165,18 @@ public class DrawingPanel extends JPanel implements KeyListener, MouseListener {
     public void mouseClicked(MouseEvent e) {
     }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        Iterator<DrawableObject> iterator = drawableObjects.iterator();
+        while (iterator.hasNext()){
+            DrawableObject tempDO = iterator.next();
+            tempDO.mouseMoved(e);
+        }
+    }
 }
 
