@@ -15,6 +15,7 @@ public class House extends GraphicalObject {
     private boolean hovering, hoverCrow;
     private double pWidth, pHeight, pX;
     private String familyName;
+    private String securityLvl;
 
     //Referenzen
     private Statement stmt;
@@ -29,19 +30,21 @@ public class House extends GraphicalObject {
         pWidth = 0;
         pX = x + 75;
         familyName = "";
+        securityLvl = "";
         setFamilyName();
     }
 
     public void setFamilyName(){
         try {
         ResultSet results = stmt.executeQuery("" +
-                "SELECT DD_Resident.lastName, DD_House.houseID " +
+                "SELECT DD_Resident.lastName, DD_House.houseID, DD_House.security " +
                 "FROM DD_Resident " +
                 "INNER JOIN DD_House ON DD_Resident.residentID = DD_House.tenantID " +
                 ";");
         while(results.next()){
             if(Integer.parseInt(results.getString(2)) == hID){
                 familyName = results.getString(1);
+                securityLvl = "Security: "+results.getString(3);
             }
         }
         }catch (SQLException e){
@@ -58,11 +61,14 @@ public class House extends GraphicalObject {
         if(hovering){
             drawTool.drawImage(createNewImage("images/popup.png"),pX,y+150,(int)pWidth,(int)pHeight);
             drawTool.drawImage(createNewImage("images/breakin-but.png"),pX,y+300,(int)pWidth-22,(int)pHeight-156);
+            drawTool.setFont("Arial",(int)pWidth-132,true);
+            drawTool.drawText(x+15,y+190,securityLvl);
             if(hoverCrow)drawTool.drawImage(createNewImage("images/breakin-but.png"),pX-6,y+294,(int)pWidth-10,(int)pHeight-144);
         }
         drawTool.drawImage(createNewImage("images/namesign.png"),x+25,y+135,100,37);
         drawTool.setFont("Times New Roman",12,true);
         drawTool.drawText(x+62,y+157,familyName);
+
 
     }
 
