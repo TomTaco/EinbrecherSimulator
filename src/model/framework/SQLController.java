@@ -18,7 +18,7 @@ public class SQLController {
             // Erstelle eine Verbindung zu unserer SQL-Datenbank
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql.webhosting24.1blu.de/db85565x2810214?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "s85565_2810214", "kkgbeste");
             stmt = con.createStatement();
-            //loadAllTables();
+            loadAllTables();
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -86,8 +86,8 @@ public class SQLController {
 
             try {
                 stmt.execute("DROP TABLE DD_House;");
+                stmt.execute("DROP TABLE DD_Resident ;");
                 stmt.execute("DROP TABLE DD_District;");
-                stmt.execute("DROP TABLE DD_Resident;");
                 stmt.execute("DROP TABLE DD_Tool;");
                 stmt.execute("DROP TABLE DD_Loot;");
                 stmt.execute("DROP TABLE DD_Car;");
@@ -97,8 +97,8 @@ public class SQLController {
                 stmt.execute("DROP TABLE DD_Contact;");
 
             } catch (SQLException e){
-                System.out.println("Tabelle nicht gelöscht.");
                 System.out.println(e);
+                System.out.println("Tabelle nicht gelöscht.");
             }
 
             try {
@@ -109,14 +109,6 @@ public class SQLController {
                         "PRIMARY KEY (districtID)" +
                         ");");
 
-                stmt.execute("CREATE TABLE DD_House(" +
-                        "houseID  int NOT NULL AUTO_INCREMENT, " +
-                        "security int NOT NULL," +
-                        "districtID int NOT NULL," +
-                        "PRIMARY KEY (houseID)," +
-                        "FOREIGN KEY (districtID) REFERENCES DD_District(districtID)" +
-                        "); ");
-
                 stmt.execute("CREATE TABLE DD_Resident(" +
                         "residentID int NOT NULL AUTO_INCREMENT, " +
                         "firstName VARCHAR(255), " +
@@ -125,6 +117,21 @@ public class SQLController {
                         "goesAway TIME NOT NULL," +
                         "PRIMARY KEY (residentID)" +
                         "); ");
+
+                stmt.execute("CREATE TABLE DD_House(" +
+                        "houseID  int NOT NULL AUTO_INCREMENT, " +
+                        "security int NOT NULL," +
+                        "districtID int NOT NULL," +
+                        "tenantID int NOT NULL," +
+                        "PRIMARY KEY (houseID)," +
+                        "FOREIGN KEY (districtID) REFERENCES DD_District(districtID)," +
+                        "FOREIGN KEY (tenantID) REFERENCES DD_Resident(residentID)" +
+                        "); ");
+
+                stmt.execute("ALTER TABLE DD_Resident " +
+                        "ADD houseID int NOT NULL," +
+                        "ADD FOREIGN KEY(houseID) REFERENCES DD_House(houseID" +
+                        ");");
 
 
                 stmt.execute("CREATE TABLE DD_Loot(" +
@@ -185,50 +192,50 @@ public class SQLController {
             try {
 
                 //Bewohner
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Janet','Arm', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Janet','Arm', 160000, 80000, 1);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Jan','Reich', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Jan','Reich', 160000, 80000, 1);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Justin','Scholz', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Justin','Scholz', 160000, 80000, 2);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Dang','Mich', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Dang','Mich', 160000, 80000, 3);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Kenbi','Knebellord', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Kenbi','Knebellord', 160000, 80000, 12);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Ambro','Ambrolord', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Ambro','Ambrolord', 160000, 80000, 11);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Tom','Taco', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Tom','Taco', 160000, 80000, 9);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Mr','KaputteKI', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Mr','KaputteKI', 160000, 80000, 9);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Mr','Highman', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Mr','Highman', 160000, 80000, 4);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Marcel','Brooooaaaaaun', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Marcel','Broooaaaun', 160000, 80000,5);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Besl','Flor', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Besl','Flor', 160000, 80000,6);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Mr','Lowman', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Mrs','Lowman', 160000, 80000, 4);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Dufte','Dave', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Dufte','Dave', 160000, 80000, 10);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Tony','Stark', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Valentina','Kerman', 160000, 80000, 8);");
 
-                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway) " +
-                        "VALUES ('Jebediah','Kerman', 160000, 80000);");
+                stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
+                        "VALUES ('Jebediah','Kerman', 160000, 80000, 8);");
 
                 //Viertel
                 stmt.execute("INSERT INTO DD_District (name) " +
