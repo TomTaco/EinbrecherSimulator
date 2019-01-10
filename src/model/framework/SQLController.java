@@ -88,6 +88,7 @@ public class SQLController {
 
                 stmt.execute("SET foreign_key_checks = 0;");
 
+                stmt.execute("DROP TABLE DD_has_Loot;");
                 stmt.execute("DROP TABLE DD_District;");
                 stmt.execute("DROP TABLE DD_House;");
                 stmt.execute("DROP TABLE DD_Resident;");
@@ -140,12 +141,15 @@ public class SQLController {
 
                 stmt.execute("CREATE TABLE DD_Loot(" +
                         "lootID int NOT NULL AUTO_INCREMENT," +
+                        "price int NOT NULL, "  +
                         "term VARCHAR(255) NOT NULL, " +
                         "PRIMARY KEY (lootID)" +
                         "); ");
 
                 stmt.execute("CREATE TABLE DD_Tool(" +
                         "toolID int NOT NULL AUTO_INCREMENT," +
+                        "toollevel int NOT NULL, " +
+                        "price int NOT NULL, " +
                         "term VARCHAR(255) NOT NULL, " +
                         "PRIMARY KEY (toolID)" +
                         "); ");
@@ -180,9 +184,13 @@ public class SQLController {
                         "PRIMARY KEY (contactID)" +
                         "); ");
 
-
-
-
+                stmt.execute("CREATE TABLE DD_has_Loot(" +
+                        "houseID int NOT NULL , "+
+                        "lootID int NOT NULL , " +
+                        "PRIMARY KEY (houseID, lootID), " +
+                        "FOREIGN KEY (houseID) REFERENCES DD_House(houseID), "+
+                        "FOREIGN KEY (lootID) REFERENCES DD_Loot(lootID) "+
+                        "); ");
 
 
             } catch (SQLException e){
@@ -198,158 +206,334 @@ public class SQLController {
                 //Bewohner
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Janet','Arm', 160000, 80000, 1);");
-
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Jan','Reich', 160000, 80000, 1);");
-
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Justin','Scholz', 160000, 80000, 2);");
-
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Dang','Mich', 160000, 80000, 3);");
-
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Kenbi','Knebellord', 160000, 80000, 12);");
-
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Ambro','Ambrolord', 160000, 80000, 11);");
-
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Tom','Taco', 160000, 80000, 9);");
-
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
-                        "VALUES ('Mr','KaputteKI', 160000, 80000, 7);");
-
+                        "VALUES ('Mister','KaputteKI', 160000, 80000, 7);");
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
-                        "VALUES ('Mr','Highman', 160000, 80000, 4);");
-
+                        "VALUES ('Mister','Highman', 160000, 80000, 4);");
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Marcel','Broooaaaun', 160000, 80000,5);");
-
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Besl','Flor', 160000, 80000,6);");
-
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
-                        "VALUES ('Mrs','Lowman', 160000, 80000, 4);");
-
+                        "VALUES ('Misses','Lowman', 160000, 80000, 4);");
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Dufte','Dave', 160000, 80000, 10);");
-
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Valentina','Kerman', 160000, 80000, 8);");
-
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Jebediah','Kerman', 160000, 80000, 8);");
-
                 //Viertel
                 stmt.execute("INSERT INTO DD_District (name) " +
                         "VALUES ('Ghetto');");
-
                 stmt.execute("INSERT INTO DD_District (name) " +
                         "VALUES ('Dorf');");
-
                 stmt.execute("INSERT INTO DD_District (name) " +
                         "VALUES ('City');");
-
                 stmt.execute("INSERT INTO DD_District (name) " +
                         "VALUES ('Bonzenviertel');");
-
                 //Häuser
                 stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
                         "VALUES ('1', '1', '2');");
-
                 stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
                         "VALUES ('2', '1', '3');");
-
                 stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
                         "VALUES ('3', '1', '4');");
-
                 stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
                         "VALUES ('4', '2', '9');");
-
                 stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
                         "VALUES ('5', '2', '10');");
-
                 stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
                         "VALUES ('6', '2', '11');");
-
                 stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
                         "VALUES ('10', '3', '8');");
-
                 stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
                         "VALUES ('15', '3', '14');");
-
                 stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
                         "VALUES ('20', '3', '7');");
-
                 stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
                         "VALUES ('30', '4', '13');");
-
                 stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
                         "VALUES ('40', '4', '5');");
-
                 stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
                         "VALUES ('50', '4', '6');");
-
                 //Autos
                 stmt.execute("INSERT INTO DD_Car (carModel) " +
                         "VALUES ('Golf GTI');");
-
                 stmt.execute("INSERT INTO DD_Car (carModel) " +
                         "VALUES ('Shirocco');");
-
                 stmt.execute("INSERT INTO DD_Car (carModel) " +
                         "VALUES ('Prosche 911');");
-
                 stmt.execute("INSERT INTO DD_Car (carModel) " +
                         "VALUES ('Ferrari 458');");
-
                 stmt.execute("INSERT INTO DD_Car (carModel) " +
                         "VALUES ('Audi R8');");
-
                 stmt.execute("INSERT INTO DD_Car (carModel) " +
                         "VALUES ('Lamborgini Huracan');");
-
                 //Diebesware
-                stmt.execute("INSERT INTO DD_Loot (term) " +
-                        "VALUES ('Schmuck');");
-
-                stmt.execute("INSERT INTO DD_Loot (term) " +
-                        "VALUES ('Silberbesteck');");
-
-                stmt.execute("INSERT INTO DD_Loot (term) " +
-                        "VALUES ('Fernsehr');");
-
-                stmt.execute("INSERT INTO DD_Loot (term) " +
-                        "VALUES ('Laptop');");
-
-                stmt.execute("INSERT INTO DD_Loot (term) " +
-                        "VALUES ('Jans Surface');");
-
-                stmt.execute("INSERT INTO DD_Loot (term) " +
-                        "VALUES ('Smartphone');");
-
-                stmt.execute("INSERT INTO DD_Loot (term) " +
-                        "VALUES ('Gold');");
-
-                stmt.execute("INSERT INTO DD_Loot (term) " +
-                        "VALUES ('Gaming PC');");
-
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Vase', '5');"); //1
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Tasse', '10');"); //2
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Teller', '15');"); //3
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Besteck', '20');"); //4
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Kleidung', '30');"); //5
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Schuhe', '50');"); //6
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Handy', '100');"); //7
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Schmuck', '150');"); //8
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Uhr', '200');"); //9
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Konsole', '250');"); //10
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Laptop', '300');"); //11
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('SamrtTv', '500');"); //12
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Gaming PC', '1000');"); //13
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Gold', '1500');"); //14
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Diamanten', '2000');"); //15
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Quanten PC', '2500');"); //16
+                stmt.execute("INSERT INTO DD_Loot (term, price) " +
+                        "VALUES ('Half Life 3 ', '5000');"); //17
                 //Werkzeuge
-                stmt.execute("INSERT INTO DD_Tool (term) " +
-                        "VALUES ('Bolzenschneider');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
+                        "VALUES ('Ziegelstein', '1', '10');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
+                        "VALUES ('Büroklammer', '2', '25');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
+                        "VALUES ('Dietrich', '3', '50');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
+                        "VALUES ('Bolzenschneider', '4', '100');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
+                        "VALUES ('Brechstange', '5', '200');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
+                        "VALUES ('Hammer', '6', '500');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
+                        "VALUES ('Bohrer', '10', '1000');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
+                        "VALUES ('Elektrischer Dietrich', '15', '2500');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
+                        "VALUES ('Fensterschneider', '20', '5000');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
+                        "VALUES ('C4', '30', '10000');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
+                        "VALUES ('Laser', '40', '25000');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
+                        "VALUES ('Polnischer Schlüssel', '50', '50000');");
+                //Loot in den Häusern
+                //Haus01
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('1', '1');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('1', '2');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('1', '3');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('1', '4');");
+                //Haus02
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('2', '1');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('2', '2');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('2', '3');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('2', '4');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('2', '5');");
+                //Haus03
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('3', '1');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('3', '2');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('3', '3');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('3', '4');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('3', '5');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('3', '6');");
+                //Haus04
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('4', '1');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('4', '2');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('4', '3');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('4', '4');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('4', '5');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('4', '6');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('4', '7');");
+                //Haus05
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('5', '1');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('5', '2');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('5', '3');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('5', '4');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('5', '5');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('5', '6');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('5', '7');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('5', '8');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('5', '9');");
+                //Haus06
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('6', '1');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('6', '2');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('6', '3');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('6', '4');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('6', '5');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('6', '6');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('6', '7');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('6', '8');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('6', '9');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('6', '10');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('6', '11');");
+                //Haus07
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('7', '7');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('7', '8');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('7', '9');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('7', '10');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('7', '11');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('7', '12');");
+                //Haus08
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('8', '7');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('8', '8');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('8', '9');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('8', '10');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('8', '11');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('8', '12');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('8', '13');");
+                //Haus09
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('9', '7');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('9', '8');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('9', '9');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('9', '10');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('9', '11');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('9', '12');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('9', '13');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('9', '14');");
+                //Haus10
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('10', '12');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('10', '13');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('10', '14');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('10', '15');");
+                //Haus11
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('11', '12');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('11', '13');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('11', '14');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('11', '15');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('11', '16');");
+                //Haus12
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('12', '12');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('12', '13');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('12', '14');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('12', '15');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('12', '16');");
+                stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
+                        "VALUES ('12', '17');");
 
-                stmt.execute("INSERT INTO DD_Tool (term) " +
-                        "VALUES ('Brechstange');");
 
-                stmt.execute("INSERT INTO DD_Tool (term) " +
-                        "VALUES ('Bohrer');");
 
-                stmt.execute("INSERT INTO DD_Tool (term) " +
-                        "VALUES ('Fensterschneider');");
 
-                stmt.execute("INSERT INTO DD_Tool (term) " +
-                        "VALUES ('Dietrich');");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             } catch (SQLException e){
                 System.out.println("Keine neue Tabelle gefüllt.");
