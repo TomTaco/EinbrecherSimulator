@@ -87,6 +87,7 @@ public class House extends GraphicalObject {
             drawTool.setFont("Arial",(int)pWidth-136,true);
             drawTool.drawText(x+15,y+190,securityLvl);
             drawTool.drawText(x+15,y+210,"Anwohner:");
+            //
             for (int i = 0; i < residentData.length; i++) {
                 drawTool.drawImage(createNewImage("images/woodpile.png"),x-5,y+217+i*20,164+residentData[i].length()*3,14);
                 drawTool.drawText(x+15,y+230+i*20,residentData[i]);
