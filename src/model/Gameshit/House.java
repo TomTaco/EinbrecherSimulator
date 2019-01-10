@@ -12,7 +12,7 @@ public class House extends GraphicalObject {
     //Attribute
     private int x, y;
     private int hID;
-    private boolean hovering;
+    private boolean hovering, hoverCrow;
     private double pWidth, pHeight, pX;
     private String familyName;
 
@@ -57,10 +57,13 @@ public class House extends GraphicalObject {
         drawTool.drawImage(createNewImage("images/house" + hID + ".png"), x, y, 150, 150);
         if(hovering){
             drawTool.drawImage(createNewImage("images/popup.png"),pX,y+150,(int)pWidth,(int)pHeight);
+            drawTool.drawImage(createNewImage("images/breakin-but.png"),pX,y+300,(int)pWidth-22,(int)pHeight-156);
+            if(hoverCrow)drawTool.drawImage(createNewImage("images/breakin-but.png"),pX-6,y+294,(int)pWidth-10,(int)pHeight-144);
         }
         drawTool.drawImage(createNewImage("images/namesign.png"),x+25,y+135,100,37);
         drawTool.setFont("Times New Roman",12,true);
         drawTool.drawText(x+62,y+157,familyName);
+
     }
 
     @Override
@@ -89,6 +92,11 @@ public class House extends GraphicalObject {
         if(e.getX() > x && e.getX() < x+150 && e.getY() > y && e.getY()< y+150) {
             hovering = true;
         }else if(hovering && e.getX() > x && e.getX() < x+150 && e.getY() > y && e.getY() < y+350){
+            if(e.getX()> x && e.getX() < x+120 && e.getY() > y+310 && e.getY() < y+350){
+                hoverCrow = true;
+            }else{
+                hoverCrow = false;
+            }
         }else{
             hovering = false;
             pHeight = 0;
