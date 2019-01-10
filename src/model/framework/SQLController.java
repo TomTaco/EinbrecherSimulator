@@ -18,6 +18,7 @@ public class SQLController {
             // Erstelle eine Verbindung zu unserer SQL-Datenbank
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql.webhosting24.1blu.de/db85565x2810214?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "s85565_2810214", "kkgbeste");
             stmt = con.createStatement();
+            //loadAllTables();
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -84,8 +85,8 @@ public class SQLController {
         public void makeTable(){
 
             try {
-                stmt.execute("DROP TABLE DD_District;");
                 stmt.execute("DROP TABLE DD_House;");
+                stmt.execute("DROP TABLE DD_District;");
                 stmt.execute("DROP TABLE DD_Resident;");
                 stmt.execute("DROP TABLE DD_Tool;");
                 stmt.execute("DROP TABLE DD_Loot;");
@@ -111,9 +112,9 @@ public class SQLController {
                 stmt.execute("CREATE TABLE DD_House(" +
                         "houseID  int NOT NULL AUTO_INCREMENT, " +
                         "security int NOT NULL," +
-                        "districtID int NOT NULL" +
-                        "PRIMARY KEY (houseID)" +
-                        "FOREIGN KEY (districtID)" +
+                        "districtID int NOT NULL," +
+                        "PRIMARY KEY (houseID)," +
+                        "FOREIGN KEY (districtID) REFERENCES DD_District(districtID)" +
                         "); ");
 
                 stmt.execute("CREATE TABLE DD_Resident(" +
@@ -175,6 +176,7 @@ public class SQLController {
 
             } catch (SQLException e){
                 System.out.println(e);
+                System.out.println("Keine Tabellen erstellt");
             }
         }
 
