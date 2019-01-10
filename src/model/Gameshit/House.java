@@ -1,5 +1,6 @@
 package model.Gameshit;
 
+import com.mysql.cj.util.StringUtils;
 import model.framework.GraphicalObject;
 import view.framework.DrawTool;
 
@@ -16,6 +17,7 @@ public class House extends GraphicalObject {
     private double pWidth, pHeight, pX;
     private String familyName;
     private String securityLvl;
+    private String [] residentData;
 
     //Referenzen
     private Statement stmt;
@@ -31,10 +33,11 @@ public class House extends GraphicalObject {
         pX = x + 75;
         familyName = "";
         securityLvl = "";
-        setFamilyName();
+        residentData = new String[0];
+        setHouseData();
     }
 
-    public void setFamilyName(){
+    public void setHouseData(){
         try {
         ResultSet results = stmt.executeQuery("" +
                 "SELECT DD_Resident.lastName, DD_House.houseID, DD_House.security " +
@@ -45,6 +48,25 @@ public class House extends GraphicalObject {
             if(Integer.parseInt(results.getString(2)) == hID){
                 familyName = results.getString(1);
                 securityLvl = "Security: "+results.getString(3);
+            }
+        }
+
+        results = stmt.executeQuery("" +
+                "SELECT firstName, lastName, comeHome, goesAway, houseID " +
+                "FROM DD_Resident" +
+                "");
+        while(results.next()){
+            if(Integer.parseInt(results.getString("houseID")) == hID){
+                String[] split = results.getString("goesAway").split(":");
+                String goesAway = split[0]+":"+split[1];
+                split = results.getString("comeHome").split(":");
+                String comeHome = split[0]+":"+split[1];
+                String[] tempArray = new String[residentData.length+1];
+                for (int i = 0; i < residentData.length; i++) {
+                    tempArray[i] = residentData[i];
+                }
+                tempArray[tempArray.length-1] = ""+results.getString("firstName")+" "+results.getString("lastName")+" "+goesAway+"-"+comeHome;
+                residentData = tempArray;
             }
         }
         }catch (SQLException e){
@@ -60,10 +82,15 @@ public class House extends GraphicalObject {
         drawTool.drawImage(createNewImage("images/house" + hID + ".png"), x, y, 150, 150);
         if(hovering){
             drawTool.drawImage(createNewImage("images/popup.png"),pX,y+150,(int)pWidth,(int)pHeight);
-            drawTool.drawImage(createNewImage("images/breakin-but.png"),pX,y+300,(int)pWidth-22,(int)pHeight-156);
-            drawTool.setFont("Arial",(int)pWidth-132,true);
-            drawTool.drawText(x+15,y+190,securityLvl);
             if(hoverCrow)drawTool.drawImage(createNewImage("images/breakin-but.png"),pX-6,y+294,(int)pWidth-10,(int)pHeight-144);
+            else drawTool.drawImage(createNewImage("images/breakin-but.png"),pX,y+300,(int)pWidth-22,(int)pHeight-156);
+            drawTool.setFont("Arial",(int)pWidth-136,true);
+            drawTool.drawText(x+15,y+190,securityLvl);
+            drawTool.drawText(x+15,y+210,"Anwohner:");
+            for (int i = 0; i < residentData.length; i++) {
+                drawTool.drawImage(createNewImage("images/woodpile.png"),x-5,y+217+i*20,164+residentData[i].length()*3,14);
+                drawTool.drawText(x+15,y+230+i*20,residentData[i]);
+            }
         }
         drawTool.drawImage(createNewImage("images/namesign.png"),x+25,y+135,100,37);
         drawTool.setFont("Times New Roman",12,true);
