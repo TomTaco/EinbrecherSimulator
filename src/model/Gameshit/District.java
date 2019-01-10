@@ -5,7 +5,9 @@ import model.Overlay;
 import model.framework.GraphicalObject;
 import view.framework.DrawTool;
 
+import javax.swing.plaf.nimbus.State;
 import java.awt.event.MouseEvent;
+import java.sql.Statement;
 
 public class District extends GraphicalObject {
 
@@ -17,25 +19,32 @@ public class District extends GraphicalObject {
     //Referenzen
     private UIController ui;
     private House[] houses = new House[3];
+    private Statement stmt;
 
-    public District(String disName, int disID, UIController ui){
+    public District(String disName, int disID, UIController ui, Statement stmt){
         this.disName = disName;
         this.disID = disID;
         this.ui = ui;
+        this.stmt = stmt;
         delay = 0.01;
 
     }
 
     private void setHouses() {
-        houses[0] = new House(50, 200, 3*disID-2);
-        houses[1] = new House(225, 200,3*disID-1);
-        houses[2] = new House(400,200,3*disID);
+        houses[0] = new House(50, 200, 3*disID-2, stmt);
+        houses[1] = new House(225, 200,3*disID-1, stmt);
+        houses[2] = new House(400,200,3*disID, stmt);
         ui.drawObject(houses[0]);
         ui.drawObject(houses[1]);
         ui.drawObject(houses[2]);
     }
 
-
+    public void removeHouses(){
+        for (int i = 0; i < 3; i++) {
+            ui.removeObject(houses[i]);
+            houses[i] = null;
+        }
+    }
 
 
     @Override

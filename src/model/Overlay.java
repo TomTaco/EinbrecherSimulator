@@ -60,7 +60,7 @@ public class Overlay extends GraphicalObject {
             ui.drawObject(back);
             ResultSet results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = 1;");
             results.next();
-            dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui);
+            dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui,stmt);
             ui.drawObject(dis);
         }catch (SQLException e){
             e.printStackTrace();
@@ -102,6 +102,7 @@ public class Overlay extends GraphicalObject {
     }
 
     public void nextDistrict(int num){
+        dis.removeHouses();
         ui.removeObject(dis);
         dis = null;
         currentDistrict += num;
@@ -128,7 +129,7 @@ public class Overlay extends GraphicalObject {
                     break;
             }
             results.next();
-            dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui);
+            dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui, stmt);
             ui.drawObject(dis);
         }catch (SQLException e){
             e.printStackTrace();
