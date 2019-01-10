@@ -110,8 +110,10 @@ public class SQLController {
 
                 stmt.execute("CREATE TABLE DD_House(" +
                         "houseID  int NOT NULL AUTO_INCREMENT, " +
-                        "security INT NOT NULL," +
+                        "security int NOT NULL," +
+                        "districtID int NOT NULL" +
                         "PRIMARY KEY (houseID)" +
+                        "FOREIGN KEY (districtID)" +
                         "); ");
 
                 stmt.execute("CREATE TABLE DD_Resident(" +
@@ -240,41 +242,41 @@ public class SQLController {
                         "VALUES ('Bonzenviertel');");
 
                 //Häuser
-                stmt.execute("INSERT INTO DD_House (security) " +
-                        "VALUES ('1');");
+                stmt.execute("INSERT INTO DD_House (security, districtID) " +
+                        "VALUES ('1', '1');");
 
-                stmt.execute("INSERT INTO DD_House (security) " +
-                        "VALUES ('2');");
+                stmt.execute("INSERT INTO DD_House (security, districtID) " +
+                        "VALUES ('2', '1');");
 
-                stmt.execute("INSERT INTO DD_House (security) " +
-                        "VALUES ('3');");
+                stmt.execute("INSERT INTO DD_House (security, districtID) " +
+                        "VALUES ('3', '1');");
 
-                stmt.execute("INSERT INTO DD_House (security) " +
-                        "VALUES ('4');");
+                stmt.execute("INSERT INTO DD_House (security, districtID) " +
+                        "VALUES ('4', '2');");
 
-                stmt.execute("INSERT INTO DD_House (security) " +
-                        "VALUES ('5');");
+                stmt.execute("INSERT INTO DD_House (security, districtID) " +
+                        "VALUES ('5', '2');");
 
-                stmt.execute("INSERT INTO DD_House (security) " +
-                        "VALUES ('6');");
+                stmt.execute("INSERT INTO DD_House (security, districtID) " +
+                        "VALUES ('6', '2');");
 
-                stmt.execute("INSERT INTO DD_House (security) " +
-                        "VALUES ('10');");
+                stmt.execute("INSERT INTO DD_House (security, districtID) " +
+                        "VALUES ('10', '3');");
 
-                stmt.execute("INSERT INTO DD_House (security) " +
-                        "VALUES ('15');");
+                stmt.execute("INSERT INTO DD_House (security, districtID) " +
+                        "VALUES ('15', '3');");
 
-                stmt.execute("INSERT INTO DD_House (security) " +
-                        "VALUES ('20');");
+                stmt.execute("INSERT INTO DD_House (security, districtID) " +
+                        "VALUES ('20', '3');");
 
-                stmt.execute("INSERT INTO DD_House (security) " +
-                        "VALUES ('30');");
+                stmt.execute("INSERT INTO DD_House (security, districtID) " +
+                        "VALUES ('30', '4');");
 
-                stmt.execute("INSERT INTO DD_House (security) " +
-                        "VALUES ('40');");
+                stmt.execute("INSERT INTO DD_House (security, districtID) " +
+                        "VALUES ('40', '4');");
 
-                stmt.execute("INSERT INTO DD_House (security) " +
-                        "VALUES ('50');");
+                stmt.execute("INSERT INTO DD_House (security, districtID) " +
+                        "VALUES ('50', '4');");
 
                 //Autos
                 stmt.execute("INSERT INTO DD_Car (carModel) " +
