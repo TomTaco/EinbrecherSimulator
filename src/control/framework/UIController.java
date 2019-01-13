@@ -38,6 +38,7 @@ public class UIController implements ActionListener {
         if ( Config.INFO_MESSAGES) System.out.println("  > UIController: Erzeuge ProgramController und starte Spielprozess (Min. dt = "+dt+"ms)...");
         if ( Config.INFO_MESSAGES) System.out.println("-------------------------------------------------------------------------------------------------\n");
         gameController = new ProgramController(this);
+        drawObject(gameController);
         gameController.startProgram();
         // Starte nebenlaeufigen Prozess, der Zeichnen und Animation uebernimmt
         lastLoop = System.nanoTime();

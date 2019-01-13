@@ -1,16 +1,20 @@
 package control;
 
 import control.framework.UIController;
+import model.Gameshit.Inventory;
 import model.Gameshit.Player;
 import model.Mainmenu;
 import model.Overlay;
+import model.framework.GraphicalObject;
 import model.framework.SQLController;
+
+import java.awt.event.KeyEvent;
 
 /**
  * Ein Objekt der Klasse ProgramController dient dazu das Programm zu steuern. Die updateProgram - Methode wird
  * mit jeder Frame im laufenden Programm aufgerufen.
  */
-public class ProgramController {
+public class ProgramController extends GraphicalObject {
 
     // Attribute
 
@@ -18,6 +22,7 @@ public class ProgramController {
     private UIController uiController;
     private Mainmenu menu;
     private SQLController sql;
+    private Inventory inventory;
 
 
     public ProgramController(UIController uiController){
@@ -34,13 +39,15 @@ public class ProgramController {
     }
 
     public void startGame(){
-        Player player = new Player(sql.getStatement(),uiController);
+        inventory = new Inventory(sql.getStmt(), uiController);
+        Player player = new Player(sql.getStmt(),uiController, inventory);
         uiController.removeObject(menu);
         menu = null;
-        Overlay ov = new Overlay(uiController, sql.getStatement(), player);
+        Overlay ov = new Overlay(uiController, sql.getStmt(), player);
         uiController.drawObject(ov);
         player.setOverlay(ov);
         uiController.drawObject(player);
+        uiController.drawObject(inventory);
 
     }
 
@@ -48,5 +55,13 @@ public class ProgramController {
 
     }
 
+    @Override
+    public void keyReleased(int key) {
+        super.keyReleased(key);
+        if(inventory != null && key == KeyEvent.VK_I){
+            uiController.removeObject(inventory);
+            uiController.drawObject(inventory);
 
+        }
+    }
 }

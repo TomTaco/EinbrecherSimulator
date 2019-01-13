@@ -1,5 +1,6 @@
 package model.Gameshit;
 
+import com.mysql.cj.xdevapi.SqlDataResult;
 import control.framework.UIController;
 import model.Overlay;
 import model.framework.GraphicalObject;
@@ -20,10 +21,13 @@ public class Player extends GraphicalObject {
     private Statement stmt;
     private UIController ui;
     private Overlay overlay;
+    private LootScreen loot;
+    private Inventory inv;
 
-    public Player(Statement stmt, UIController ui){
+    public Player(Statement stmt, UIController ui, Inventory inv){
         this.stmt = stmt;
         this.ui = ui;
+        this.inv = inv;
         skillLvl = 40;
         money = 100;
         setPlayerData();
@@ -76,6 +80,9 @@ public class Player extends GraphicalObject {
     private void success(int hID, int leftTime) {
         System.out.println("Alda du bist der geborene Dieb!!");
         try{
+            loot = new LootScreen(200,200,ui, this);
+
+
             ResultSet results = stmt.executeQuery("SELECT COUNT(DD_Loot.lootID) " +
                     "FROM DD_Loot " +
                     "INNER JOIN DD_has_Loot " +
@@ -116,12 +123,36 @@ public class Player extends GraphicalObject {
         leftTime -= lInfo[chosen][1] * 10;
 
         if(leftTime > 10)steal(lInfo, leftTime);
-        else System.out.println("finito");
+        else ui.drawObject(loot);
+
     }
 
     private void addItem(int itemID) {
-        Item item = new Item(itemID,stmt);
+        loot.addItem(itemID, stmt);
+        try{
+            ResultSet results = stmt.executeQuery("SELECT lootID, amount " +
+                    "FROM DD_owns_Loot");
+            boolean alreadyIn = false;
+            while(results.next() && !alreadyIn){
+                if(itemID == results.getInt("lootID")){
+                    alreadyIn = true;
+                    stmt.execute("UPDATE DD_owns_Loot " +
+                            "SET amount = "+(results.getInt("amount")+1)+" " +
+                            "WHERE lootID = "+ itemID + ";");
+                }
+            }
+            if(!alreadyIn) {
+                stmt.execute("INSERT INTO DD_owns_Loot (playerID, lootID, amount) " +
+                        "VALUES ('1','" + itemID + "','1');");
+            }
+
+        }catch(SQLException e){
+            System.out.println(e);
+            //e.printStackTrace();
+        }
+
     }
+
 
     private void fail() {
         System.out.println("Wie schlecht kann man nur sein !??!");
@@ -131,5 +162,10 @@ public class Player extends GraphicalObject {
 
     public void setOverlay(Overlay ov){
         this.overlay = ov;
+    }
+
+    public void closeLootScreen(Item[] items) {
+        ui.removeObject(loot);
+        loot= null;
     }
 }

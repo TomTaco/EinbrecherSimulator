@@ -89,6 +89,7 @@ public class SQLController {
                 stmt.execute("SET foreign_key_checks = 0;");
 
                 stmt.execute("DROP TABLE DD_PlayerData");
+                stmt.execute("DROP TABLE DD_owns_Loot");
                 stmt.execute("DROP TABLE DD_has_Loot;");
                 stmt.execute("DROP TABLE DD_District;");
                 stmt.execute("DROP TABLE DD_House;");
@@ -198,6 +199,15 @@ public class SQLController {
                         "cTime int NOT NULL," +
                         "Exp int NOT NULL," +
                         "PRIMARY KEY (playerID)" +
+                        ");");
+
+                stmt.execute("CREATE TABLE DD_owns_Loot(" +
+                        "playerID int NOT NULL," +
+                        "lootID int NOT NULL," +
+                        "amount int NOT NULL," +
+                        "PRIMARY KEY (lootID, playerID)," +
+                        "FOREIGN KEY (playerID) REFERENCES DD_PlayerData(playerID)," +
+                        "FOREIGN KEY (lootID) REFERENCES DD_Loot(lootID)" +
                         ");");
 
                 stmt.execute("CREATE TABLE DD_has_Loot(" +
@@ -314,7 +324,7 @@ public class SQLController {
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
                         "VALUES ('Teller', '8', '1');"); //2
                 stmt.execute("INSERT INTO DD_Loot(term,price, difficulty)" +
-                        "VALUES ('Lieblingskuscheltier', '10', '2');"); //3
+                        "VALUES ('Lieblingsplüschi', '10', '2');"); //3
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
                         "VALUES ('Besteck', '15', '2');"); //4
                 stmt.execute("INSERT INTO DD_Loot(term,price, difficulty)" +
@@ -322,7 +332,7 @@ public class SQLController {
                 stmt.execute("INSERT INTO DD_Loot(term,price, difficulty)" +
                         "VALUES ('Waage', '20', '2');"); //6
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
-                        "VALUES ('Horn Pub Abonnement', '25', '3');"); //7
+                        "VALUES ('Horn Pub Abo', '25', '3');"); //7
                 stmt.execute("INSERT INTO DD_Loot(term,price, difficulty)" +
                         "VALUES ('Kupferkabel', '30', '3');"); //8
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
@@ -342,7 +352,7 @@ public class SQLController {
                 stmt.execute("INSERT INTO DD_Loot(term,price, difficulty)" +
                         "VALUES ('150$', '150', '4');"); //16
                 stmt.execute("INSERT INTO DD_Loot(term,price, difficulty)" +
-                        "VALUES ('Michelle Mors Handtasche', '210', '5');"); //17
+                        "VALUES ('M.Mors Handtasche', '210', '5');"); //17
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
                         "VALUES ('Samschnung Smartwatch', '250', '5');"); //18
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
@@ -672,7 +682,7 @@ public class SQLController {
 
         }
 
-        public Statement getStatement (){
+        public Statement getStmt(){
             return stmt;
         }
 

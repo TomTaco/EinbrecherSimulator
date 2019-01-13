@@ -13,21 +13,18 @@ public class Item extends GraphicalObject {
     private int price;
     private String name;
     private int iD;
+    private int amount;
 
     private Statement stmt;
-
-    public Item(int x, int y, int price, String name){
-        this.x = x;
-        this.y = y;
-        this.price = price;
-        this.name = name;
-    }
 
     public Item(int iD, Statement stmt){
         this.iD = iD;
         this.stmt = stmt;
         setData();
+        amount = 1;
         System.out.println("du hast geklaut: "+ name);
+        createAndSetNewImage("images/Items/no.png");
+        createAndSetNewImage("images/Items/"+name+".png");
     }
 
     private void setData() {
@@ -46,6 +43,27 @@ public class Item extends GraphicalObject {
     @Override
     public void draw(DrawTool drawTool) {
         super.draw(drawTool);
-        drawTool.drawImage(createNewImage("images/Items"+name+".png"),x,y);
     }
+
+    public void addOne(){
+        amount += 1;
+    }
+    public int getAmount(){
+        return amount;
+    }
+
+    public int getID(){
+        return iD;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void setAmount(int amount){
+        this.amount = amount;
+    }
+
+
+
 }

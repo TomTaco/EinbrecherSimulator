@@ -83,6 +83,7 @@ public class House extends GraphicalObject {
     @Override
     public void draw(DrawTool drawTool) {
         super.draw(drawTool);
+        drawTool.setCurrentColor(255,255,255,255);
         drawTool.drawImage(createNewImage("images/house" + hID + ".png"), x, y, 150, 150);
         if(hovering){
             drawTool.drawImage(createNewImage("images/popup.png"),pX,y+150,(int)pWidth,(int)pHeight);
