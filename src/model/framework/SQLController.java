@@ -407,7 +407,8 @@ public class SQLController {
                         "VALUES ('1', '5');");
                 //Haus02
                 stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
-                        "VALUES ('1', '1');");
+                        "VALUES ('2', '1');");
+                //
                 stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
                         "VALUES ('2', '2');");
                 stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
