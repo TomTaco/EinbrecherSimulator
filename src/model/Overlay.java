@@ -4,6 +4,7 @@ package model;
 import control.framework.UIController;
 import model.Gameshit.Background;
 import model.Gameshit.District;
+import model.Gameshit.Player;
 import model.framework.GraphicalObject;
 import view.framework.DrawTool;
 
@@ -22,6 +23,7 @@ public class Overlay extends GraphicalObject {
     private UIController ui;
     private Statement stmt;
     private Background back;
+    private Player player;
 
     //Attribute
     private int hours;
@@ -31,9 +33,10 @@ public class Overlay extends GraphicalObject {
     private int currentDistrict;
     private boolean clicked;
 
-    public Overlay(UIController ui, Statement stmt){
+    public Overlay(UIController ui, Statement stmt, Player player){
         this.ui = ui;
         this.stmt = stmt;
+        this.player = player;
         hours = 8;
         minutes = 0;
         seconds = 0;
@@ -60,7 +63,7 @@ public class Overlay extends GraphicalObject {
             ui.drawObject(back);
             ResultSet results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = 1;");
             results.next();
-            dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui,stmt);
+            dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui,stmt, player);
             ui.drawObject(dis);
         }catch (SQLException e){
             e.printStackTrace();
@@ -129,7 +132,7 @@ public class Overlay extends GraphicalObject {
                     break;
             }
             results.next();
-            dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui, stmt);
+            dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui, stmt, player);
             ui.drawObject(dis);
         }catch (SQLException e){
             e.printStackTrace();

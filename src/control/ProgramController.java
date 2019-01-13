@@ -1,6 +1,7 @@
 package control;
 
 import control.framework.UIController;
+import model.Gameshit.Player;
 import model.Mainmenu;
 import model.Overlay;
 import model.framework.SQLController;
@@ -33,9 +34,11 @@ public class ProgramController {
     }
 
     public void startGame(){
+        Player player = new Player(sql.getStatement(),uiController);
+        uiController.drawObject(player);
         uiController.removeObject(menu);
         menu = null;
-        Overlay ov = new Overlay(uiController, sql.getStatement());
+        Overlay ov = new Overlay(uiController, sql.getStatement(), player);
         uiController.drawObject(ov);
 
     }

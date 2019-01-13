@@ -18,16 +18,19 @@ public class House extends GraphicalObject {
     private String familyName;
     private String securityLvl;
     private String [] residentData;
+    private boolean clicked;
+
 
     //Referenzen
     private Statement stmt;
+    private Player player;
 
-
-    public House(int x, int y, int hID, Statement stmt){
+    public House(int x, int y, int hID, Statement stmt, Player player){
         this.x = x;
         this.y = y;
         this.hID = hID;
         this.stmt = stmt;
+        this.player = player;
         pHeight = 0;
         pWidth = 0;
         pX = x + 75;
@@ -43,31 +46,30 @@ public class House extends GraphicalObject {
                 "SELECT DD_Resident.lastName, DD_House.houseID, DD_House.security " +
                 "FROM DD_Resident " +
                 "INNER JOIN DD_House ON DD_Resident.residentID = DD_House.tenantID " +
+                "WHERE DD_House.houseID = "+hID +
                 ";");
         while(results.next()){
-            if(Integer.parseInt(results.getString(2)) == hID){
-                familyName = results.getString(1);
-                securityLvl = "Security: "+results.getString(3);
-            }
+            familyName = results.getString(1);
+            securityLvl = "Security: "+results.getString(3);
         }
 
         results = stmt.executeQuery("" +
                 "SELECT firstName, lastName, comeHome, goesAway, houseID " +
-                "FROM DD_Resident" +
+                "FROM DD_Resident " +
+                "WHERE houseID = "+hID +
                 "");
-        while(results.next()){
-            if(Integer.parseInt(results.getString("houseID")) == hID){
-                String[] split = results.getString("goesAway").split(":");
-                String goesAway = split[0]+":"+split[1];
-                split = results.getString("comeHome").split(":");
-                String comeHome = split[0]+":"+split[1];
-                String[] tempArray = new String[residentData.length+1];
-                for (int i = 0; i < residentData.length; i++) {
-                    tempArray[i] = residentData[i];
-                }
-                tempArray[tempArray.length-1] = ""+results.getString("firstName")+" "+results.getString("lastName")+" "+goesAway+"-"+comeHome;
-                residentData = tempArray;
+        while(results.next()) {
+            String[] split = results.getString("goesAway").split(":");
+            String goesAway = split[0] + ":" + split[1];
+            split = results.getString("comeHome").split(":");
+            String comeHome = split[0] + ":" + split[1];
+            String[] tempArray = new String[residentData.length + 1];
+            for (int i = 0; i < residentData.length; i++) {
+                tempArray[i] = residentData[i];
             }
+            tempArray[tempArray.length - 1] = "" + results.getString("firstName") + " " + results.getString("lastName") + " " + goesAway + "-" + comeHome;
+            residentData = tempArray;
+
         }
         }catch (SQLException e){
             e.printStackTrace();
@@ -82,8 +84,8 @@ public class House extends GraphicalObject {
         drawTool.drawImage(createNewImage("images/house" + hID + ".png"), x, y, 150, 150);
         if(hovering){
             drawTool.drawImage(createNewImage("images/popup.png"),pX,y+150,(int)pWidth,(int)pHeight);
-            if(hoverCrow)drawTool.drawImage(createNewImage("images/breakin-but.png"),pX-6,y+294,(int)pWidth-10,(int)pHeight-144);
-            else drawTool.drawImage(createNewImage("images/breakin-but.png"),pX,y+300,(int)pWidth-22,(int)pHeight-156);
+            if(hoverCrow)drawTool.drawImage(createNewImage("images/breakin-but.png"),pX+6,y+294,(int)pWidth-10,(int)pHeight-144);
+            else drawTool.drawImage(createNewImage("images/breakin-but.png"),pX+12,y+300,(int)pWidth-22,(int)pHeight-156);
             drawTool.setFont("Arial",(int)pWidth-136,true);
             drawTool.drawText(x+15,y+190,securityLvl);
             drawTool.drawText(x+15,y+210,"Anwohner:");
@@ -125,7 +127,7 @@ public class House extends GraphicalObject {
         if(e.getX() > x && e.getX() < x+150 && e.getY() > y && e.getY()< y+150) {
             hovering = true;
         }else if(hovering && e.getX() > x && e.getX() < x+150 && e.getY() > y && e.getY() < y+350){
-            if(e.getX()> x && e.getX() < x+120 && e.getY() > y+310 && e.getY() < y+350){
+            if(e.getX()> x+12 && e.getX() < x+132 && e.getY() > y+310 && e.getY() < y+350){
                 hoverCrow = true;
             }else{
                 hoverCrow = false;
@@ -136,5 +138,16 @@ public class House extends GraphicalObject {
             pWidth = 0;
             pX = x + 75;
         }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        super.mouseReleased(e);
+        if(!clicked) {
+            if (e.getX() > x + 6 && e.getX() < x + 126 && e.getY() > y + 308 && e.getY() < y + 344) {
+                player.breakIn(hID);
+            }
+        }
+        clicked = !clicked;
     }
 }

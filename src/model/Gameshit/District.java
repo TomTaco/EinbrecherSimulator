@@ -20,20 +20,22 @@ public class District extends GraphicalObject {
     private UIController ui;
     private House[] houses = new House[3];
     private Statement stmt;
+    private Player player;
 
-    public District(String disName, int disID, UIController ui, Statement stmt){
+    public District(String disName, int disID, UIController ui, Statement stmt, Player player){
         this.disName = disName;
         this.disID = disID;
         this.ui = ui;
         this.stmt = stmt;
+        this.player = player;
         delay = 0.01;
 
     }
 
     private void setHouses() {
-        houses[0] = new House(50, 200, 3*disID-2, stmt);
-        houses[1] = new House(225, 200,3*disID-1, stmt);
-        houses[2] = new House(400,200,3*disID, stmt);
+        houses[0] = new House(50, 200, 3*disID-2, stmt,  player);
+        houses[1] = new House(225, 200,3*disID-1, stmt, player);
+        houses[2] = new House(400,200,3*disID, stmt,player);
         ui.drawObject(houses[0]);
         ui.drawObject(houses[1]);
         ui.drawObject(houses[2]);
