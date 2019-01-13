@@ -151,4 +151,11 @@ public class Overlay extends GraphicalObject {
         }
         clicked = !clicked;
     }
+
+    public int getHours(){
+        return hours;
+    }
+    public int getMinutes(){
+        return minutes;
+    }
 }

@@ -18,7 +18,7 @@ public class SQLController {
             // Erstelle eine Verbindung zu unserer SQL-Datenbank
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql.webhosting24.1blu.de/db85565x2810214?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "s85565_2810214", "kkgbeste");
             stmt = con.createStatement();
-            loadAllTables();
+            //loadAllTables();
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -108,11 +108,7 @@ public class SQLController {
 
             try {
 
-                stmt.execute("CREATE TABLE DD_PlayerData(" +
-                        "playerID int NOT NULL AUTO_INCREMENT," +
-                        "money int NOT NULL," +
-                        "PRIMARY KEY (playerID)" +
-                        ");");
+
 
                 stmt.execute("CREATE TABLE DD_District(" +
                         "districtID int NOT NULL AUTO_INCREMENT," +
@@ -195,6 +191,14 @@ public class SQLController {
                         "information VARCHAR(255)," +
                         "PRIMARY KEY (contactID)" +
                         "); ");
+
+                stmt.execute("CREATE TABLE DD_PlayerData(" +
+                        "playerID int NOT NULL AUTO_INCREMENT," +
+                        "money int NOT NULL," +
+                        "cTime int NOT NULL," +
+                        "Exp int NOT NULL," +
+                        "PRIMARY KEY (playerID)" +
+                        ");");
 
                 stmt.execute("CREATE TABLE DD_has_Loot(" +
                         "houseID int NOT NULL , "+
@@ -356,21 +360,21 @@ public class SQLController {
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
                         "VALUES ('MePhone', '1200', '10');");//25
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
-                        "VALUES ('Gaming PC', '1200', '10');"); //26
+                        "VALUES ('Gaming PC', '1200', '11');"); //26
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
-                        "VALUES ('Diamantring', '2000', '13');"); //27
+                        "VALUES ('Diamantring', '2000', '12');"); //27
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
-                        "VALUES ('Waschmaschine', '2500', '15');"); //28
+                        "VALUES ('Waschmaschine', '2500', '13');"); //28
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
-                        "VALUES ('Abstraktes Gemälde', '3600', '18');"); //29
+                        "VALUES ('Abstraktes Gemälde', '3600', '15');"); //29
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
                         "VALUES ('Half Life 3 ', '5000', '20');"); //30
                 stmt.execute("INSERT INTO DD_Loot(term,price, difficulty)" +
-                        "VALUES ('Rolecks', '11000', '35');"); //31
+                        "VALUES ('Rolecks', '11000', '25');"); //31
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
-                        "VALUES ('Quanten PC', '25000', '50');");//32
+                        "VALUES ('Quanten PC', '25000', '30');");//32
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
-                        "VALUES ('Zeitmaschine', '45000','100');");//33
+                        "VALUES ('Zeitmaschine', '45000','45');");//33
 
                 //Werkzeuge
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
@@ -636,8 +640,8 @@ public class SQLController {
 
                 //Player
 
-                stmt.execute("INSERT INTO DD_PlayerData (money) " +
-                        "VALUES ('0');");
+                stmt.execute("INSERT INTO DD_PlayerData (money, cTime, Exp) " +
+                        "VALUES ('100', '1200', '0');");
 
 
 

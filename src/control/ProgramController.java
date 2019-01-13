@@ -35,11 +35,12 @@ public class ProgramController {
 
     public void startGame(){
         Player player = new Player(sql.getStatement(),uiController);
-        uiController.drawObject(player);
         uiController.removeObject(menu);
         menu = null;
         Overlay ov = new Overlay(uiController, sql.getStatement(), player);
         uiController.drawObject(ov);
+        player.setOverlay(ov);
+        uiController.drawObject(player);
 
     }
 

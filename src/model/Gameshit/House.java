@@ -1,6 +1,5 @@
 package model.Gameshit;
 
-import com.mysql.cj.util.StringUtils;
 import model.framework.GraphicalObject;
 import view.framework.DrawTool;
 
@@ -19,6 +18,8 @@ public class House extends GraphicalObject {
     private String securityLvl;
     private String [] residentData;
     private boolean clicked;
+    private boolean breakingIn;
+    private int stealingTime;
 
 
     //Referenzen
@@ -37,6 +38,7 @@ public class House extends GraphicalObject {
         familyName = "";
         securityLvl = "";
         residentData = new String[0];
+        stealingTime = 1;
         setHouseData();
     }
 
@@ -97,6 +99,14 @@ public class House extends GraphicalObject {
         drawTool.drawImage(createNewImage("images/namesign.png"),x+25,y+135,100,37);
         drawTool.setFont("Times New Roman",12,true);
         drawTool.drawText(x+62,y+157,familyName);
+        if(breakingIn){
+            drawTool.drawImage(createNewImage("images/timeselect.png"),150,400);
+            if(stealingTime < 10)drawTool.setFont("Impact",50,true);
+            else drawTool.setFont("Impact",45,false);
+            drawTool.setCurrentColor(0,0,0,255);
+            drawTool.drawText(375,580, ""+stealingTime+"h");
+            drawTool.drawRectangle(350,597,98,31);
+        }
 
 
     }
@@ -144,8 +154,23 @@ public class House extends GraphicalObject {
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
         if(!clicked) {
-            if (e.getX() > x + 6 && e.getX() < x + 126 && e.getY() > y + 308 && e.getY() < y + 344) {
-                player.breakIn(hID);
+            if (hovering && e.getX() > x + 6 && e.getX() < x + 126 && e.getY() > y + 308 && e.getY() < y + 344) {
+
+                breakingIn = true;
+            }
+            if(breakingIn){
+                if(stealingTime > 1 && e.getX() >265 && e.getX() < 328 && e.getY() > 530 && e.getY() < 585){
+                    stealingTime -= 1;
+                }else if(stealingTime < 10 && e.getX() >470 && e.getX() < 533 && e.getY() > 530 && e.getY() < 585){
+                    stealingTime += 1;
+                }else if(e.getX() >605 && e.getX() < 636 && e.getY() > 413 && e.getY() < 444){
+                    breakingIn = false;
+                    stealingTime = 1;
+                }else if(e.getX() >350 && e.getX() < 448 && e.getY() > 597 && e.getY() < 628){
+                    System.out.println("hello!");
+                    breakingIn = false;
+                    player.breakIn(hID, stealingTime);
+                }
             }
         }
         clicked = !clicked;
