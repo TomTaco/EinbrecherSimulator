@@ -134,9 +134,11 @@ public class SQLController {
                         "security int NOT NULL," +
                         "districtID int NOT NULL," +
                         "tenantID int NOT NULL," +
+                        "carID int ," +
                         "PRIMARY KEY (houseID)," +
                         "FOREIGN KEY (districtID) REFERENCES DD_District(districtID) ON DELETE CASCADE ," +
-                        "FOREIGN KEY (tenantID) REFERENCES DD_Resident(residentID) ON DELETE CASCADE" +
+                        "FOREIGN KEY (tenantID) REFERENCES DD_Resident(residentID) ON DELETE CASCADE ," +
+                        "FOREIGN KEY (carID) REFERENCES DD_Car(carID) ON DELETE CASCADE" +
                         "); ");
 
                 stmt.execute("ALTER TABLE DD_Resident " +
@@ -165,6 +167,8 @@ public class SQLController {
                 stmt.execute("CREATE TABLE DD_Car("+
                         "carID int NOT NULL AUTO_INCREMENT,"+
                         "carModel VARCHAR (255)," +
+                        "price int NOT NULL, " +
+                        "difficulty int NOT NULL," +
                         "PRIMARY KEY (carID)" +
                         "); ");
 
@@ -237,7 +241,7 @@ public class SQLController {
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Mister','KaputteKI', 160000, 80000, 7);");
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
-                        "VALUES ('Mister','FunktionierendeKI', 80000, 160000, 7);");
+                        "VALUES ('Misses','FunktionierendeKI', 80000, 160000, 7);");
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
                         "VALUES ('Mister','Highman', 233000, 180000, 4);");
                 stmt.execute("INSERT INTO DD_Resident (firstname, lastname, comeHome, goesAway, houseID) " +
@@ -262,43 +266,43 @@ public class SQLController {
                 stmt.execute("INSERT INTO DD_District (name) " +
                         "VALUES ('Bonzenviertel');");
                 //Häuser
-                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
-                        "VALUES ('1', '1', '2');");
-                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
-                        "VALUES ('2', '1', '3');");
-                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
-                        "VALUES ('3', '1', '4');");
-                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
-                        "VALUES ('4', '2', '14');");
-                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
-                        "VALUES ('5', '2', '15');");
-                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
-                        "VALUES ('6', '2', '16');");
-                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
-                        "VALUES ('10', '3', '12');");
-                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
-                        "VALUES ('15', '3', '19');");
-                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
-                        "VALUES ('20', '3', '11');");
-                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
-                        "VALUES ('30', '4', '18');");
-                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
-                        "VALUES ('40', '4', '9');");
-                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID) " +
-                        "VALUES ('50', '4', '6');");
+                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID, carID) " +
+                        "VALUES ('1', '1', '2',null);");
+                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID, carID) " +
+                        "VALUES ('2', '1', '3',null);");
+                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID, carID) " +
+                        "VALUES ('3', '1', '4',null);");
+                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID, carID) " +
+                        "VALUES ('4', '2', '14',null);");
+                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID, carID) " +
+                        "VALUES ('5', '2', '15',null);");
+                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID, carID) " +
+                        "VALUES ('6', '2', '16',null);");
+                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID, carID) " +
+                        "VALUES ('10', '3', '12','1');");
+                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID, carID) " +
+                        "VALUES ('15', '3', '19','2');");
+                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID, carID) " +
+                        "VALUES ('20', '3', '11','3');");
+                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID, carID) " +
+                        "VALUES ('30', '4', '18','4');");
+                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID, carID) " +
+                        "VALUES ('40', '4', '9','5');");
+                stmt.execute("INSERT INTO DD_House (security, districtID, tenantID, carID) " +
+                        "VALUES ('50', '4', '6','6');");
                 //Autos
-                stmt.execute("INSERT INTO DD_Car (carModel) " +
-                        "VALUES ('Golf GTI');");
-                stmt.execute("INSERT INTO DD_Car (carModel) " +
-                        "VALUES ('Shirocco');");
-                stmt.execute("INSERT INTO DD_Car (carModel) " +
-                        "VALUES ('Prosche 911');");
-                stmt.execute("INSERT INTO DD_Car (carModel) " +
-                        "VALUES ('Ferrari 458');");
-                stmt.execute("INSERT INTO DD_Car (carModel) " +
-                        "VALUES ('Audi R8');");
-                stmt.execute("INSERT INTO DD_Car (carModel) " +
-                        "VALUES ('Lamborgini Huracan');");
+                stmt.execute("INSERT INTO DD_Car (carModel, price, difficulty) " +
+                        "VALUES ('Golf GTI','1000','12');");
+                stmt.execute("INSERT INTO DD_Car (carModel, price, difficulty) " +
+                        "VALUES ('Shirocco','2000','21');");
+                stmt.execute("INSERT INTO DD_Car (carModel, price, difficulty) " +
+                        "VALUES ('Prosche 911','3000','37');");
+                stmt.execute("INSERT INTO DD_Car (carModel, price, difficulty) " +
+                        "VALUES ('Ferrari 458','5000','44');");
+                stmt.execute("INSERT INTO DD_Car (carModel, price, difficulty) " +
+                        "VALUES ('Audi R8','10000','64');");
+                stmt.execute("INSERT INTO DD_Car (carModel, price, difficulty) " +
+                        "VALUES ('Lamborgini Huracan','15000','73');");
 
                 //Diebesware
                 stmt.execute("INSERT INTO DD_Loot (term, price, difficulty) " +
