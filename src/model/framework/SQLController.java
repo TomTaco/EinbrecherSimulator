@@ -8,6 +8,7 @@ import java.sql.*;
 public class SQLController {
 
     private Statement stmt;
+    private Connection con;
 
 
     public SQLController() {
@@ -16,7 +17,7 @@ public class SQLController {
 
         try {
             // Erstelle eine Verbindung zu unserer SQL-Datenbank
-            Connection con = DriverManager.getConnection("jdbc:mysql://mysql.webhosting24.1blu.de/db85565x2810214?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "s85565_2810214", "kkgbeste");
+            con = DriverManager.getConnection("jdbc:mysql://mysql.webhosting24.1blu.de/db85565x2810214?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "s85565_2810214", "kkgbeste");
             stmt = con.createStatement();
             //loadAllTables();
         } catch (Exception e) {
@@ -394,7 +395,7 @@ public class SQLController {
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
                         "VALUES ('Dietrich', '3', '50');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Bolzenschneider', '4', '100');");
+                        "VALUES ('Bolzenschn.', '4', '100');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
                         "VALUES ('Brechstange', '5', '200');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
@@ -402,15 +403,15 @@ public class SQLController {
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
                         "VALUES ('Bohrer', '10', '1000');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Elektrischer Dietrich', '15', '2500');");
+                        "VALUES ('Elktr. Dietr.', '15', '2500');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Fensterschneider', '20', '5000');");
+                        "VALUES ('Fensterschn.', '20', '5000');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
                         "VALUES ('C4', '30', '10000');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
                         "VALUES ('Laser', '40', '25000');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Polnischer Schlüssel', '50', '50000');");
+                        "VALUES ('Poln. Schlüssl', '50', '50000');");
                 //Loot in den Häusern
                 //Haus01
                 stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
@@ -651,7 +652,7 @@ public class SQLController {
                 //Player
 
                 stmt.execute("INSERT INTO DD_PlayerData (money, cTime, Exp) " +
-                        "VALUES ('100', '1200', '0');");
+                        "VALUES ('0', '1200', '0');");
 
 
 
@@ -684,6 +685,10 @@ public class SQLController {
 
         public Statement getStmt(){
             return stmt;
+        }
+
+        public Connection getCon(){
+            return con;
         }
 
 

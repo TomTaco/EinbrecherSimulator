@@ -11,6 +11,7 @@ public class Item extends GraphicalObject {
     //Attribute
     private int x,y;
     private int price;
+    private boolean selling;
     private String name;
     private int iD;
     private int amount;
@@ -62,6 +63,33 @@ public class Item extends GraphicalObject {
 
     public void setAmount(int amount){
         this.amount = amount;
+    }
+
+    public boolean isSelling(){
+        return selling;
+    }
+
+    public void setSelling(boolean selling){
+        this.selling = selling;
+    }
+
+    @Override
+    public double getX() {
+        return x;
+    }
+
+    @Override
+    public double getY() {
+        return y;
+    }
+
+    public void setPosition(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getPrice(){
+        return  price;
     }
 
 

@@ -6,6 +6,7 @@ import model.Overlay;
 import model.framework.GraphicalObject;
 import view.framework.DrawTool;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,23 +19,33 @@ public class Player extends GraphicalObject {
     private int money, hours, minutes, exp;
 
     //Referenzen
-    private Statement stmt;
+    private Connection con;
     private UIController ui;
     private Overlay overlay;
     private LootScreen loot;
     private Inventory inv;
 
-    public Player(Statement stmt, UIController ui, Inventory inv){
-        this.stmt = stmt;
+
+    public Player(Connection con, UIController ui){
+        this.con = con;
         this.ui = ui;
-        this.inv = inv;
         skillLvl = 40;
         money = 100;
         setPlayerData();
     }
 
+    @Override
+    public void draw(DrawTool drawTool) {
+        super.draw(drawTool);
+        drawTool.drawImage(createNewImage("Images/creditcard.png"),34,105,128,64);
+        drawTool.setCurrentColor(255,255,255,255);
+        drawTool.setFont("Arial",12,false);
+        drawTool.drawText(84,154,money+"$");
+    }
+
     private void setPlayerData() {
         try{
+            Statement stmt = con.createStatement();
             ResultSet results = stmt.executeQuery("SELECT * FROM DD_PlayerData");
             results.next();
             money = results.getInt("money");
@@ -53,6 +64,7 @@ public class Player extends GraphicalObject {
         int actualTime = breakInTime *60;
         double successChance = 0.7;
         try{
+            Statement stmt = con.createStatement();
             ResultSet results = stmt.executeQuery("SELECT security " +
                     "FROM DD_House " +
                     "WHERE houseID = "+houseID+"" +
@@ -82,7 +94,7 @@ public class Player extends GraphicalObject {
         try{
             loot = new LootScreen(200,200,ui, this);
 
-
+            Statement stmt = con.createStatement();
             ResultSet results = stmt.executeQuery("SELECT COUNT(DD_Loot.lootID) " +
                     "FROM DD_Loot " +
                     "INNER JOIN DD_has_Loot " +
@@ -93,7 +105,8 @@ public class Player extends GraphicalObject {
             int[][] lootInfo = new int[results.getInt(1)][2];
             System.out.println("So viele Dinge gibts zu stehlen: "+results.getInt(1));
 
-            results = stmt.executeQuery("SELECT DD_Loot.lootID, DD_Loot.difficulty " +
+            Statement stmt2 = con.createStatement();
+            results = stmt2.executeQuery("SELECT DD_Loot.lootID, DD_Loot.difficulty " +
                     "FROM DD_Loot " +
                     "INNER JOIN DD_has_Loot " +
                     "ON DD_Loot.lootID = DD_has_Loot.lootID " +
@@ -128,9 +141,12 @@ public class Player extends GraphicalObject {
     }
 
     private void addItem(int itemID) {
-        loot.addItem(itemID, stmt);
+
         try{
-            ResultSet results = stmt.executeQuery("SELECT lootID, amount " +
+            Statement stmt = con.createStatement();
+            loot.addItem(itemID, stmt);
+            Statement stmt2 = con.createStatement();
+            ResultSet results = stmt2.executeQuery("SELECT lootID, amount " +
                     "FROM DD_owns_Loot");
             boolean alreadyIn = false;
             while(results.next() && !alreadyIn){
@@ -148,7 +164,7 @@ public class Player extends GraphicalObject {
 
         }catch(SQLException e){
             System.out.println(e);
-            //e.printStackTrace();
+            e.printStackTrace();
         }
 
     }
@@ -156,7 +172,7 @@ public class Player extends GraphicalObject {
 
     private void fail() {
         System.out.println("Wie schlecht kann man nur sein !??!");
-        money -= money /10;
+        addMoney(-money/10);
         System.out.println("Dein Geld!: "+money);
     }
 
@@ -167,5 +183,24 @@ public class Player extends GraphicalObject {
     public void closeLootScreen(Item[] items) {
         ui.removeObject(loot);
         loot= null;
+        if(inv != null)inv.setItemData();
+    }
+
+    public void setInv(Inventory inv){
+        this.inv = inv;
+    }
+
+    public void addMoney(int amount){
+        this.money += amount;
+        try {
+            con.createStatement().execute("UPDATE DD_PlayerData " +
+                    "SET money = "+ money+";" );
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    public int getMoney(){
+        return money;
     }
 }

@@ -3,6 +3,7 @@ package control;
 import control.framework.UIController;
 import model.Gameshit.Inventory;
 import model.Gameshit.Player;
+import model.Gameshit.Shop;
 import model.Mainmenu;
 import model.Overlay;
 import model.framework.GraphicalObject;
@@ -39,15 +40,17 @@ public class ProgramController extends GraphicalObject {
     }
 
     public void startGame(){
-        inventory = new Inventory(sql.getStmt(), uiController);
-        Player player = new Player(sql.getStmt(),uiController, inventory);
+        Player player = new Player(sql.getCon(),uiController);
         uiController.removeObject(menu);
         menu = null;
         Overlay ov = new Overlay(uiController, sql.getStmt(), player);
         uiController.drawObject(ov);
         player.setOverlay(ov);
         uiController.drawObject(player);
+        inventory = new Inventory(sql.getCon(), player);
         uiController.drawObject(inventory);
+        Shop shop = new Shop(sql.getCon(),uiController,player);
+        uiController.drawObject(shop);
 
     }
 
