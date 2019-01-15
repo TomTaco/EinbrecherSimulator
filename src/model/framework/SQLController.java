@@ -19,7 +19,7 @@ public class SQLController {
             // Erstelle eine Verbindung zu unserer SQL-Datenbank
             con = DriverManager.getConnection("jdbc:mysql://mysql.webhosting24.1blu.de/db85565x2810214?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "s85565_2810214", "kkgbeste");
             stmt = con.createStatement();
-            //loadAllTables();
+            loadAllTables();
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -159,6 +159,7 @@ public class SQLController {
                         "toollevel int NOT NULL, " +
                         "price int NOT NULL, " +
                         "term VARCHAR(255) NOT NULL, " +
+                        "bought int NOT NULL, " +
                         "PRIMARY KEY (toolID)" +
                         "); ");
 
@@ -199,7 +200,9 @@ public class SQLController {
                         "money int NOT NULL," +
                         "cTime int NOT NULL," +
                         "Exp int NOT NULL," +
-                        "PRIMARY KEY (playerID)" +
+                        "selectedTool int, " +
+                        "PRIMARY KEY (playerID)," +
+                        "FOREIGN KEY (selectedTool) REFERENCES DD_Tool(toolID) "+
                         ");");
 
                 stmt.execute("CREATE TABLE DD_owns_Loot(" +
@@ -388,30 +391,30 @@ public class SQLController {
                         "VALUES ('Zeitmaschine', '45000','45');");//33
 
                 //Werkzeuge
-                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Ziegelstein', '1', '10');");
-                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Büroklammer', '2', '25');");
-                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Dietrich', '3', '50');");
-                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Bolzenschn.', '4', '100');");
-                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Brechstange', '5', '200');");
-                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Hammer', '6', '500');");
-                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Bohrer', '10', '1000');");
-                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Elktr. Dietr.', '15', '2500');");
-                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Fensterschn.', '20', '5000');");
-                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('C4', '30', '10000');");
-                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Laser', '40', '25000');");
-                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price) " +
-                        "VALUES ('Poln. Schlüssl', '50', '50000');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
+                        "VALUES ('Ziegelstein', '1', '10', '0');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
+                        "VALUES ('Büroklammer', '2', '25', '0');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
+                        "VALUES ('Dietrich', '3', '50', '0');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
+                        "VALUES ('Bolzenschn.', '4', '100', '0');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
+                        "VALUES ('Brechstange', '5', '200', '0');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
+                        "VALUES ('Hammer', '6', '500', '0');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
+                        "VALUES ('Bohrer', '10', '1000', '0');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
+                        "VALUES ('Elktr. Dietr.', '15', '2500', '0');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
+                        "VALUES ('Fensterschn.', '20', '5000', '0');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
+                        "VALUES ('C4', '30', '10000', '0');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
+                        "VALUES ('Laser', '40', '25000', '0');");
+                stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
+                        "VALUES ('Poln. Schlüssl', '50', '50000', '0');");
                 //Loot in den Häusern
                 //Haus01
                 stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
@@ -427,7 +430,6 @@ public class SQLController {
                 //Haus02
                 stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
                         "VALUES ('2', '1');");
-                //
                 stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
                         "VALUES ('2', '2');");
                 stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
@@ -651,8 +653,8 @@ public class SQLController {
 
                 //Player
 
-                stmt.execute("INSERT INTO DD_PlayerData (money, cTime, Exp) " +
-                        "VALUES ('0', '1200', '0');");
+                stmt.execute("INSERT INTO DD_PlayerData (money, cTime, Exp, selectedTool) " +
+                        "VALUES ('0', '1200', '0', null);");
 
 
 
