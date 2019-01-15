@@ -17,6 +17,7 @@ public class Player extends GraphicalObject {
     private int skillLvl;
 
     private int money, hours, minutes, exp;
+    private Tool selectedTool;
 
     //Referenzen
     private Connection con;
@@ -24,6 +25,7 @@ public class Player extends GraphicalObject {
     private Overlay overlay;
     private LootScreen loot;
     private Inventory inv;
+
 
 
     public Player(Connection con, UIController ui){
@@ -202,5 +204,9 @@ public class Player extends GraphicalObject {
 
     public int getMoney(){
         return money;
+    }
+
+    public void setSelectedTool(Tool tool){
+        this.selectedTool = tool;
     }
 }

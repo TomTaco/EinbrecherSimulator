@@ -506,7 +506,7 @@ public class SQLController {
                 stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
                         "VALUES ('6', '3');");
                 stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
-                        "VALUES ('6', '7');");
+                        "VALUES ('6', '6');");
                 stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +
                         "VALUES ('6', '11');");
                 stmt.execute("INSERT INTO DD_has_Loot (houseID, lootID) " +

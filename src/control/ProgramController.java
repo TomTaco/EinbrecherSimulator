@@ -64,7 +64,6 @@ public class ProgramController extends GraphicalObject {
         if(inventory != null && key == KeyEvent.VK_I){
             uiController.removeObject(inventory);
             uiController.drawObject(inventory);
-
         }
     }
 }

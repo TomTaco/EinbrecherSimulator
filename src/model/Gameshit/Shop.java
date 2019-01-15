@@ -54,8 +54,8 @@ public class Shop extends GraphicalObject {
         if(open) {
             if (sy < 900) sy += 500 * dt;
              else sy = 900;
-            if(y > 420){
-                y -= 700*dt;
+            if(y > 445){
+                y -= 650*dt;
                 if(tools != null) {
                     for (int i = 0; i < tools.length; i++) {
                         if (i < 6) tools[i].setY( y+50 + 128);
@@ -73,10 +73,10 @@ public class Shop extends GraphicalObject {
                 }
             }
         }else{
-            if (sy > 300) sy -= 500 * dt;
+            if (sy > 320) sy -= 500 * dt;
             else sy = 300;
             if(y < 1100) {
-                y += 700 * dt;
+                y += 550 * dt;
                 if(tools != null) {
                     for (int i = 0; i < tools.length; i++) {
                         if (i < 6) tools[i].setY( y-50 + 128);
@@ -108,11 +108,11 @@ public class Shop extends GraphicalObject {
                 int i = 0;
                 while(results.next()){
                     if(i < 6){
-                        Tool tool = new Tool(x+23+i*81,y+128,results.getInt("toolID"),con, player);
+                        Tool tool = new Tool(x+23+i*81,y+128,results.getInt("toolID"),con, player,this);
                         tools[i] = tool;
 
                     }else{
-                        Tool tool = new Tool(x+23+(i-6)*81,y+128+112,results.getInt("toolID"),con,player);
+                        Tool tool = new Tool(x+23+(i-6)*81,y+128+112,results.getInt("toolID"),con,player,this);
                         tools[i] = tool;
                     }
                     ui.drawObject(tools[i]);
@@ -138,7 +138,16 @@ public class Shop extends GraphicalObject {
                     open = false;
                 }
             }
+
         }
         clicked = !clicked;
+    }
+
+    public void unselectEvTh(Tool notUnselect){
+        for (int i = 0; i < tools.length; i++) {
+            if(notUnselect != tools[i]){
+                tools[i].setSelected(false);
+            }
+        }
     }
 }
