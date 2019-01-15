@@ -1,4 +1,4 @@
-package model;
+package model.Gameshit;
 
 
 import control.framework.UIController;
@@ -32,6 +32,7 @@ public class Overlay extends GraphicalObject {
     private String time;
     private int currentDistrict;
     private boolean clicked;
+    private int multi;
 
     public Overlay(UIController ui, Statement stmt, Player player){
         this.ui = ui;
@@ -43,6 +44,8 @@ public class Overlay extends GraphicalObject {
         time = "0"+hours+":"+"0"+minutes;
         currentDistrict = 1;
         clicked = false;
+        multi = 1;
+        player.setOverlay(this);
         buildGame();
     }
 
@@ -54,6 +57,7 @@ public class Overlay extends GraphicalObject {
         drawTool.setCurrentColor(230,230,230,255);
         drawTool.setFont("Arial",25,false);
         drawTool.drawText(700,50,time);
+        drawTool.drawImage(createNewImage("Images/forward_"+multi+".png"),635,26,64,32);
 
     }
 
@@ -74,11 +78,11 @@ public class Overlay extends GraphicalObject {
     public void update(double dt) {
         super.update(dt);
         if(seconds < 60){
-            seconds += 60*dt;
+            seconds += 2*multi*60*dt;
         }else{
             seconds = 0;
-            if((minutes + 5) < 60) {
-                minutes += 5;
+            if((minutes + multi*5) < 60) {
+                minutes += multi*5;
             }else{
             minutes = 0;
                 if(hours < 23) {
@@ -111,26 +115,11 @@ public class Overlay extends GraphicalObject {
         currentDistrict += num;
         if(currentDistrict < 1) currentDistrict = 4;
         else if(currentDistrict > 4) currentDistrict = 1;
-        ResultSet results = null;
         try {
-            switch(currentDistrict){
-                case 1:
-                    results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = 1;");
-                    back.changeBackground(1);
-                    break;
-                case 2:
-                    results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = 2;");
-                    back.changeBackground(2);
-                    break;
-                case 3:
-                    results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = 3;");
-                    back.changeBackground(3);
-                    break;
-                case 4:
-                    results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = 4;");
-                    back.changeBackground(4);
-                    break;
-            }
+
+
+            ResultSet results = stmt.executeQuery("SELECT * FROM DD_District WHERE districtID = "+currentDistrict+";");
+            back.changeBackground(currentDistrict);
             results.next();
             dis = new District(results.getString("name"),Integer.parseInt(results.getString("districtID")),ui, stmt, player);
             ui.drawObject(dis);
@@ -148,6 +137,13 @@ public class Overlay extends GraphicalObject {
             } else if (e.getX() > 550 && e.getX() < 590 && e.getY() > 52 && e.getY() < 92) {
                 nextDistrict(1);
             }
+            if(e.getX() > 635 && e.getX() < 699 && e.getY() > 26 && e.getY() < 58){
+                if(multi <8){
+                    multi *= 2;
+                }else{
+                    multi = 1;
+                }
+            }
         }
         clicked = !clicked;
     }
@@ -155,7 +151,21 @@ public class Overlay extends GraphicalObject {
     public int getHours(){
         return hours;
     }
+    public void setHours(int hours){
+        this.hours = hours;
+    }
     public int getMinutes(){
         return minutes;
     }
+
+    public void addTime(int amount){
+        if(minutes + amount < 60){
+            minutes+= amount;
+        }else{
+            hours += amount/60;
+            minutes += amount%60;
+        }
+
+    }
+
 }

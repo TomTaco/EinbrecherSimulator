@@ -168,7 +168,6 @@ public class House extends GraphicalObject {
                     breakingIn = false;
                     stealingTime = 1;
                 }else if(e.getX() >350 && e.getX() < 448 && e.getY() > 597 && e.getY() < 628){
-                    System.out.println("hello!");
                     breakingIn = false;
                     player.breakIn(hID, stealingTime);
                 }

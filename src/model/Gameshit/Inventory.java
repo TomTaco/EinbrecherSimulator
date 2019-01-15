@@ -131,7 +131,7 @@ public class Inventory extends GraphicalObject {
         boolean sold = false;
         if(!clicked) {
             for (int i = 0; i < items.length; i++) {
-                if(items[i].isSelling() && items[i].isSelling() && e.getX() > items[i].getX()+15 && e.getX() < items[i].getX()+15 + 35 && e.getY() > items[i].getY()+5 && e.getY() < items[i].getY()+5 + 18){
+                if(items[i].isSelling() && e.getX() > items[i].getX()+15 && e.getX() < items[i].getX()+15 + 35 && e.getY() > items[i].getY()+5 && e.getY() < items[i].getY()+5 + 18){
                     items[i].setSelling(false);
                     sell(items[i]);
                     sold = true;
@@ -158,7 +158,6 @@ public class Inventory extends GraphicalObject {
                 stmt.execute("UPDATE DD_owns_Loot " +
                         "SET amount = "+ (item.getAmount()-1)+" " +
                         "WHERE lootID = "+ item.getID()+";");
-                System.out.println("done");
             }else{
                 stmt.execute("DELETE FROM DD_owns_Loot " +
                         "WHERE lootiD = "+item.getID()+";");
@@ -174,13 +173,12 @@ public class Inventory extends GraphicalObject {
         try {
             Statement stmt = con.createStatement();
             if(item.getAmount() >= sAmount) {
-                player.addMoney(item.getPrice());
+                player.addMoney(item.getPrice()*sAmount);
                 if ((item.getAmount() - sAmount) >= 1) {
                     stmt.execute("UPDATE DD_owns_Loot " +
                             "SET amount = " + (item.getAmount() - sAmount) + " " +
                             "WHERE lootID = " + item.getID() + ";");
 
-                    System.out.println("done");
                 }else if((item.getAmount() - sAmount) == 0){
                     stmt.execute("DELETE FROM DD_owns_Loot " +
                             "WHERE lootiD = "+item.getID()+";");

@@ -5,7 +5,7 @@ import model.Gameshit.Inventory;
 import model.Gameshit.Player;
 import model.Gameshit.Shop;
 import model.Mainmenu;
-import model.Overlay;
+import model.Gameshit.Overlay;
 import model.framework.GraphicalObject;
 import model.framework.SQLController;
 
@@ -40,8 +40,11 @@ public class ProgramController extends GraphicalObject {
     }
 
     public void startGame(){
-        Player player = new Player(sql.getCon(),uiController);
+
         uiController.removeObject(menu);
+
+        Player player = new Player(sql.getCon(),uiController);
+
         menu = null;
         Overlay ov = new Overlay(uiController, sql.getStmt(), player);
         uiController.drawObject(ov);
@@ -51,6 +54,8 @@ public class ProgramController extends GraphicalObject {
         uiController.drawObject(inventory);
         Shop shop = new Shop(sql.getCon(),uiController,player);
         uiController.drawObject(shop);
+
+
 
     }
 

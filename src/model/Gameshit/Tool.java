@@ -20,6 +20,7 @@ public class Tool extends GraphicalObject {
     private boolean selected;
     private boolean bought;
     private boolean clicked;
+    private int lvl;
 
     private Connection con;
     private Player player;
@@ -40,12 +41,16 @@ public class Tool extends GraphicalObject {
     private void setData() {
         try{
             ResultSet results = con.createStatement().executeQuery("" +
-                    "SELECT term, price " +
+                    "SELECT term, price, toolLevel, bought " +
                     "FROM DD_Tool " +
                     "WHERE toolID = "+id+";");
             results.next();
             name = results.getString("term");
             price = results.getInt("price");
+            lvl = results.getInt("toolLevel");
+            if(results.getInt("bought") == 1){
+                bought = true;
+            }
 
         }catch(SQLException e){
             System.out.println(e);
@@ -110,6 +115,11 @@ public class Tool extends GraphicalObject {
         bought = true;
         player.addMoney(-price);
         select();
+        try {
+            con.createStatement().execute("UPDATE DD_Tool SET bought = 1 WHERE toolID = "+id+";");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public void select(){
@@ -121,6 +131,14 @@ public class Tool extends GraphicalObject {
 
     public void setSelected(boolean select){
         this.selected = select;
+    }
+
+    public int getId(){
+        return  id;
+    }
+
+    public int getLvl() {
+        return lvl;
     }
 }
 

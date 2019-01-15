@@ -19,7 +19,7 @@ public class SQLController {
             // Erstelle eine Verbindung zu unserer SQL-Datenbank
             con = DriverManager.getConnection("jdbc:mysql://mysql.webhosting24.1blu.de/db85565x2810214?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "s85565_2810214", "kkgbeste");
             stmt = con.createStatement();
-            loadAllTables();
+            //loadAllTables();
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -32,56 +32,7 @@ public class SQLController {
         fillTable();
     }
 
-    /*public void runDemo(){
 
-        try {
-            // Erstelle eine Verbindung zu unserer SQL-Datenbank
-            Connection con = DriverManager.getConnection("jdbc:mysql://mysql.webhosting24.1blu.de/db85565x2810214?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "s85565_2810214", "kkgbeste");
-            Statement stmt = con.createStatement();
-
-            // lösche die Tabelle, falls sie schon existiert
-            try {
-                stmt.execute("DROP TABLE test_person;");
-            } catch (Exception e){
-                System.out.println("Tabelle nicht gelöscht.");
-            }
-
-            // Lege eine neue Tabelle (wirft Exception, falls Tabelle schon vorhanden)
-            try {
-                stmt.execute("CREATE TABLE test_person (" +
-                        "pID int NOT NULL AUTO_INCREMENT," +
-                        "firstname varchar(255) NOT NULL," +
-                        "lastname varchar(255) NOT NULL," +
-                        "currentage int NOT NULL," +
-                        "PRIMARY KEY (pID)" +
-                        ");");
-                } catch (Exception e){
-                    System.out.println("Keine neue Tabelle angelegt.");
-            }
-
-            // Lege ein paar Datensätze in der Tabelle an (primary key wird ausgelassen wg. auto-inkrement => heißt aber man kann Leute auch doppelt anlegen)
-            stmt.execute("INSERT INTO test_person (firstname, lastname, currentage) " +
-                    "VALUES ('Peter', 'Pan', 14);");
-            stmt.execute("INSERT INTO test_person (firstname, lastname, currentage) " +
-                    "VALUES ('Jack', 'Ripperlein', 32);");
-            stmt.execute("INSERT INTO test_person (firstname, lastname, currentage) " +
-                    "VALUES ('Olaf', 'Steiner', 52);");
-            stmt.execute("INSERT INTO test_person (firstname, lastname, currentage) " +
-                    "VALUES ('Klaus', 'Kloppmann', 41);");
-            stmt.execute("INSERT INTO test_person (firstname, lastname, currentage) " +
-                    "VALUES ('Bese', 'Flor', 16);");
-
-            // Gib die gesamte Tabelle test_person aus
-            ResultSet results = stmt.executeQuery("SELECT * FROM test_person;");
-
-            System.out.println("ID(primary key) - Vorname - Nachname - Alter");
-            while(results.next()){
-                System.out.println(results.getString(1) + " - " +results.getString(2) + " - " + results.getString(3) + " - " + results.getString(4));
-            }
-
-        } catch(Exception e){
-            e.printStackTrace();
-        }*/
 
         public void makeTable(){
 
@@ -392,17 +343,17 @@ public class SQLController {
 
                 //Werkzeuge
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
-                        "VALUES ('Ziegelstein', '1', '10', '0');");
+                        "VALUES ('Ziegelstein', '2', '10', '0');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
-                        "VALUES ('Büroklammer', '2', '25', '0');");
+                        "VALUES ('Büroklammer', '3', '25', '0');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
-                        "VALUES ('Dietrich', '3', '50', '0');");
+                        "VALUES ('Dietrich', '4', '50', '0');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
-                        "VALUES ('Bolzenschn.', '4', '100', '0');");
+                        "VALUES ('Bolzenschn.', '5', '100', '0');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
-                        "VALUES ('Brechstange', '5', '200', '0');");
+                        "VALUES ('Brechstange', '6', '200', '0');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
-                        "VALUES ('Hammer', '6', '500', '0');");
+                        "VALUES ('Hammer', '7', '500', '0');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +
                         "VALUES ('Bohrer', '10', '1000', '0');");
                 stmt.execute("INSERT INTO DD_Tool (term, toollevel, price, bought) " +

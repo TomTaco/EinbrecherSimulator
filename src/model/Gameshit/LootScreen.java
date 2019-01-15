@@ -27,6 +27,7 @@ public class LootScreen extends GraphicalObject {
     public void draw(DrawTool drawTool) {
         super.draw(drawTool);
         drawTool.drawImage(createNewImage("images/beute.png"),x,y);
+        drawTool.setCurrentColor(255,255,255,255);
         for (int i = 1; i < items.length; i++) {
             //sieht komisch aus, ich weiß. Hat grafische Gründe!
             if(i <= 3) {
@@ -66,7 +67,6 @@ public class LootScreen extends GraphicalObject {
 
 
         }
-        drawTool.drawRectangle(x+210,445,85,45);
 
     }
 

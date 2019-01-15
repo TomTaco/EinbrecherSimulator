@@ -1,11 +1,9 @@
 package model.Gameshit;
 
 import control.framework.UIController;
-import model.Overlay;
 import model.framework.GraphicalObject;
 import view.framework.DrawTool;
 
-import javax.swing.plaf.nimbus.State;
 import java.awt.event.MouseEvent;
 import java.sql.Statement;
 
@@ -29,7 +27,6 @@ public class District extends GraphicalObject {
         this.stmt = stmt;
         this.player = player;
         delay = 0.01;
-
     }
 
     private void setHouses() {

@@ -23,7 +23,6 @@ public class Item extends GraphicalObject {
         this.stmt = stmt;
         setData();
         amount = 1;
-        System.out.println("du hast geklaut: "+ name);
         createAndSetNewImage("images/Items/no.png");
         createAndSetNewImage("images/Items/"+name+".png");
     }
