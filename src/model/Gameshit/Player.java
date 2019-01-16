@@ -65,12 +65,13 @@ public class Player extends GraphicalObject {
             if(results.getInt("selectedTool") == 0) {
                 selectedTool = null;
             }else{
-                results = con.createStatement().executeQuery("SELECT DD_PlayerData.money, DD_PlayerData.EXP, DD_Tool.toolLevel FROM DD_PlayerData INNER JOIN DD_Tool ON DD_PlayerData.selectedTool = DD_Tool.toolID;");
+                results = con.createStatement().executeQuery("SELECT DD_Tool.toolLevel FROM DD_PlayerData INNER JOIN DD_Tool ON DD_PlayerData.selectedTool = DD_Tool.toolID;");
                 results.next();
-                money = results.getInt(1);
-                exp = results.getInt(2);
-                skillLvl = 1+ results.getInt(3);
+                skillLvl = results.getInt(1);
             }
+            results = con.createStatement().executeQuery("SELECT money FROM DD_PlayerData; ");
+            results.next();
+            money = results.getInt(1);
 
         }catch (SQLException e){
             System.out.println(e);
@@ -174,7 +175,7 @@ public class Player extends GraphicalObject {
 
     }
 
-    private void steal(int[][] lInfo, double leftTime, double pastTime, double cTgC, double[] awayFrom, double[] awayTo) {
+    public void steal(int[][] lInfo, double leftTime, double pastTime, double cTgC, double[] awayFrom, double[] awayTo) {
         //wählt per Mathrandom einen zufälligen Index aus
         int chosen = (int) (Math.random()* lInfo.length);
 
@@ -214,8 +215,8 @@ public class Player extends GraphicalObject {
         try{
             Statement stmt = con.createStatement();
             loot.addItem(itemID, stmt);
-            Statement stmt2 = con.createStatement();
-            ResultSet results = stmt2.executeQuery("SELECT lootID, amount " +
+
+            ResultSet results = stmt.executeQuery("SELECT lootID, amount " +
                     "FROM DD_owns_Loot");
             boolean alreadyIn = false;
             while(results.next() && !alreadyIn){
@@ -232,7 +233,6 @@ public class Player extends GraphicalObject {
             }
         }catch(SQLException e){
             System.out.println(e);
-            e.printStackTrace();
         }
 
     }
